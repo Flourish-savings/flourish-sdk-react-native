@@ -1,33 +1,14 @@
 import * as React from 'react';
-
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'flourish-sdk-react-native';
+import Flourish from 'flourish-sdk-react-native';
 
 const RewardsScreen = () => {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    multiply(2, 2).then(setResult);
-  }, []);
-
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <Flourish
+      partnerId="2476f19f-bf9c-4b52-9c51-a5cbf56fc89e"
+      partnerSecret="4dc94959-1f7b-434b-bc98-c9cd3c9e3807"
+      customerCode="123"
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
-  },
-});
 
 export default RewardsScreen;
