@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { api } from './service/api';
-
-import { StyleSheet, View, Text } from 'react-native';
+import { WebView } from 'react-native-webview';
+import { StyleSheet, View } from 'react-native';
 
 interface Props {
   partnerId: string;
@@ -14,6 +14,8 @@ const Flourish: React.FC<Props> = ({
   partnerSecret,
   customerCode,
 }) => {
+  const [token, setToken] = useState<string>('');
+
   const authenticate = async (access_token: string): Promise<boolean> => {
     const response = await api.signIn(access_token);
     return response.isValid;
@@ -26,6 +28,7 @@ const Flourish: React.FC<Props> = ({
       customerCode
     );
     if (response.access_token) {
+      setToken(response.access_token);
       authenticate(response.access_token);
     } else {
       console.error(`Error fetching token: ${JSON.stringify(response)}`, []);
@@ -37,23 +40,11 @@ const Flourish: React.FC<Props> = ({
   });
 
   return (
-    <View style={styles.container}>
-      <Text>Thw WebView will be rendered here</Text>
-    </View>
+    <WebView
+      source={{ uri: `https://flourish-app-stg.flourishfi.com?token=${token}` }}
+      style={{ marginTop: 45 }}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
-  },
-});
 
 export default Flourish;
