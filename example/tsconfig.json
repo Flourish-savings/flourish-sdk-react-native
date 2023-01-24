@@ -2,5 +2,9 @@
   "extends": "../tsconfig",
   "compilerOptions": {
     // Avoid expo-cli auto-generating a tsconfig
-  }
+  },
+  "ts-node": {
+    "files": true
+  },
+  "include": ["src/**/*.ts", "environment.d.ts"]
 }

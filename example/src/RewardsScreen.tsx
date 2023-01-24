@@ -1,12 +1,22 @@
 import * as React from 'react';
 import Flourish from 'flourish-sdk-react-native';
 
+const printEventData = (data: string): void => {
+  console.log('Event Client side', data);
+};
+
 const RewardsScreen = () => {
+  const partnerId = process.env.PARTNER_ID;
+  const partnerSecret = process.env.PARTNER_SECRET;
+  const customerCode = process.env.CUSTOMER_CODE;
+  const environment = process.env.ENVIRONMENT;
   return (
     <Flourish
-      partnerId="2476f19f-bf9c-4b52-9c51-a5cbf56fc89e"
-      partnerSecret="4dc94959-1f7b-434b-bc98-c9cd3c9e3807"
-      customerCode="123"
+      partnerId={partnerId}
+      partnerSecret={partnerSecret}
+      customerCode={customerCode}
+      environment={environment}
+      eventCallback={printEventData}
     />
   );
 };

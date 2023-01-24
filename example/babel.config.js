@@ -18,6 +18,7 @@ module.exports = function (api) {
         },
       ],
       'react-native-paper/babel',
+      'transform-inline-environment-variables'
     ],
   };
 };

@@ -73,7 +73,7 @@
     "typescript": "^4.5.2"
   },
   "resolutions": {
-    "@types/react": "17.0.21"
+    "@types/react": "~17.0.21"
   },
   "peerDependencies": {
     "react": "*",
@@ -160,6 +160,7 @@
     "global": "^4.4.0",
     "react-native-cli": "^2.0.1",
     "react-native-dotenv": "^3.4.6",
+    "react-native-event-listeners": "^1.0.7",
     "react-native-webview": "^11.26.0"
   }
 }
