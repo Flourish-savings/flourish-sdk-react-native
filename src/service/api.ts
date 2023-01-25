@@ -1,36 +1,26 @@
-import type { ApiConfig } from './api.types';
-
-const BASE_API_URL = 'https://staging.flourishsavings.com/api/v1';
-
-export const DEFAULT_API_CONFIG: ApiConfig = {
-  url: BASE_API_URL,
-  timeout: 10000,
-};
-
+import Config from '../config';
 export class Api {
-  config: ApiConfig;
-
-  constructor(config: ApiConfig = DEFAULT_API_CONFIG) {
-    this.config = config;
-  }
-
   async authenticate(
     partnerId: string,
     partnerSecret: string,
-    customerCode: string
+    customerCode: string,
+    environment: string
   ): Promise<{ access_token: '' }> {
     try {
-      const response = await fetch(`${BASE_API_URL}/access_token`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          partner_uuid: partnerId,
-          partner_secret: partnerSecret,
-          customer_code: customerCode,
-        }),
-      });
+      const response = await fetch(
+        `${Config.BACKEND_API_URL.get(environment)}/access_token`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            partner_uuid: partnerId,
+            partner_secret: partnerSecret,
+            customer_code: customerCode,
+          }),
+        }
+      );
       const res = await response.json();
       console.log(res);
       return { access_token: res.access_token };
@@ -40,15 +30,21 @@ export class Api {
     }
   }
 
-  async signIn(access_token: string): Promise<{ isValid: boolean }> {
+  async signIn(
+    access_token: string,
+    environment: string
+  ): Promise<{ isValid: boolean }> {
     try {
-      const response = await fetch(`${BASE_API_URL}/sign_in`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${access_token}`,
-        },
-      });
+      const response = await fetch(
+        `${Config.BACKEND_API_URL.get(environment)}/sign_in`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${access_token}`,
+          },
+        }
+      );
       const res = await response.json();
       console.log(res);
       return response.status === 200 ? { isValid: true } : { isValid: false };
