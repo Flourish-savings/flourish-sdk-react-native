@@ -33,7 +33,8 @@
     "prepack": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
-    "bootstrap": "yarn example && yarn install"
+    "bootstrap": "yarn example && yarn install",
+    "prepare": "bob build"
   },
   "keywords": [
     "react-native",
@@ -68,7 +69,7 @@
     "prettier": "^2.0.5",
     "react": "18.1.0",
     "react-native": "^0.70.6",
-    "react-native-builder-bob": "^0.20.0",
+    "react-native-builder-bob": "^0.20.3",
     "release-it": "^15.0.0",
     "typescript": "^4.5.2"
   },
