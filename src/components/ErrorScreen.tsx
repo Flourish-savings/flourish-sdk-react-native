@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
-const ErrorScreen = ({ navigation }: Props) => {
+const ErrorScreen = () => {
   const errorText = 'Too long out. Renewing your experience';
 
   return (

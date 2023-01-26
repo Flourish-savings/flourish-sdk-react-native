@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { api } from './service/api';
 import { onEventReceived } from './events/eventManager';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomePage from './components/HomePage';
-import ErrorScreen from './components/ErrorScreen';
 
 type ConfigProps = {
   partnerId: string;
@@ -37,23 +34,12 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
     }
   };
 
-  const Stack = createNativeStackNavigator();
-
   useEffect(() => {
     onEventReceived(props.eventCallback);
     getToken();
   });
 
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home">
-          {() => <HomePage token={token} environment={props.environment} />}
-        </Stack.Screen>
-        <Stack.Screen name="Error" component={ErrorScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  return <HomePage token={token} environment={props.environment} />;
 };
 
 export default Flourish;
