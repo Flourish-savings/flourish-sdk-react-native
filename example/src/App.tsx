@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BottomNavigation } from 'react-native-paper';
 import SafeAreaView from 'react-native-safe-area-view';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -6,6 +6,7 @@ import HomeScreen from './HomeScreen';
 import RewardsScreen from './RewardsScreen';
 import FavoriteScreen from './FavoriteScreen';
 import NotificationScreen from './NotificationScreen';
+import { initializeFlourish } from 'flourish-sdk-react-native';
 
 export default function App() {
   const [index, setIndex] = useState(0);
@@ -35,6 +36,14 @@ export default function App() {
       unfocusedIcon: 'gift-outline',
     },
   ]);
+
+  useEffect(() => {
+    const partnerId = process.env.PARTNER_ID;
+    const partnerSecret = process.env.PARTNER_SECRET;
+    const language = process.env.LANGUAGE;
+    const environment = process.env.ENVIRONMENT;
+    initializeFlourish(partnerId, partnerSecret, language, environment);
+  }, []);
 
   const renderScene = BottomNavigation.SceneMap({
     home: HomeScreen,
