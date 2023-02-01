@@ -1,12 +1,33 @@
 import Config from '../config';
+
+interface BodyApi {
+  partner_uuid: string;
+  partner_secret: string;
+  customer_code: string;
+  [category: string]: any;
+}
 export class Api {
   async authenticate(
     partnerId: string,
     partnerSecret: string,
     environment: string,
-    customerCode: string
+    customerCode: string,
+    category?: string
   ): Promise<{ access_token: '' }> {
     try {
+      let body: BodyApi = {
+        partner_uuid: partnerId,
+        partner_secret: partnerSecret,
+        customer_code: customerCode,
+      };
+
+      if (category) {
+        body = {
+          ...body,
+          category: category,
+        };
+      }
+
       const response = await fetch(
         `${Config.BACKEND_API_URL.get(environment)}/access_token`,
         {
@@ -14,11 +35,7 @@ export class Api {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            partner_uuid: partnerId,
-            partner_secret: partnerSecret,
-            customer_code: customerCode,
-          }),
+          body: JSON.stringify(body),
         }
       );
       const res = await response.json();
