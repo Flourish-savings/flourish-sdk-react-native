@@ -28,17 +28,10 @@ export const initializeFlourish = async (
   setPartnerSecret(secret);
 };
 
-export const authenticateFlourish = (clientCustomerCode: string) => {
-  auth(clientCustomerCode);
-};
-
-const signIn = async (access_token: string): Promise<boolean> => {
-  const environment = (await AsyncStorage.getItem('environment')) || '';
-  const response = await api.signIn(access_token, environment);
-  return response.isValid;
-};
-
-const auth = async (clientCustomerCode: string) => {
+export const authenticate = async (
+  clientCustomerCode: string,
+  category?: string
+) => {
   const partnerId = (await AsyncStorage.getItem('partnerId')) || '';
   const partnerSecret = (await AsyncStorage.getItem('partnerSecret')) || '';
   const environment = (await AsyncStorage.getItem('environment')) || '';
@@ -47,7 +40,8 @@ const auth = async (clientCustomerCode: string) => {
     partnerId,
     partnerSecret,
     environment,
-    clientCustomerCode
+    clientCustomerCode,
+    category
   );
   if (response.access_token) {
     setToken(response.access_token);
@@ -55,6 +49,12 @@ const auth = async (clientCustomerCode: string) => {
   } else {
     console.error(`Error fetching token: ${JSON.stringify(response)}`, []);
   }
+};
+
+const signIn = async (access_token: string): Promise<boolean> => {
+  const environment = (await AsyncStorage.getItem('environment')) || '';
+  const response = await api.signIn(access_token, environment);
+  return response.isValid;
 };
 
 const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {

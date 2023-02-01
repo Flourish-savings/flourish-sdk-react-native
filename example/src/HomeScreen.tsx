@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { authenticateFlourish } from 'flourish-sdk-react-native';
+import { authenticate } from 'flourish-sdk-react-native';
 import { StyleSheet, View, Text } from 'react-native';
 
 const HomeScreen = () => {
   useEffect(() => {
     const customerCode = process.env.CUSTOMER_CODE;
-    authenticateFlourish(customerCode);
+    const category = process.env.CATEGORY;
+    authenticate(customerCode, category);
   });
 
   return (
