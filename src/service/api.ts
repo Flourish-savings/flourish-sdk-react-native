@@ -3,8 +3,8 @@ export class Api {
   async authenticate(
     partnerId: string,
     partnerSecret: string,
-    customerCode: string,
-    environment: string
+    environment: string,
+    customerCode: string
   ): Promise<{ access_token: '' }> {
     try {
       const response = await fetch(

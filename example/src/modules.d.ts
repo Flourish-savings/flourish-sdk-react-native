@@ -3,6 +3,7 @@ declare namespace NodeJS {
     PARTNER_ID: string;
     PARTNER_SECRET: string;
     CUSTOMER_CODE: string;
+    LANGUAGE: string;
     ENVIRONMENT: string;
   }
 }
