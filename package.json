@@ -1,7 +1,7 @@
 {
   "name": "flourish-sdk-react-native",
-  "version": "1.2.1",
-  "description": "test",
+  "version": "1.2.3",
+  "description": "Flourish React Native SDK",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
@@ -57,11 +57,7 @@
     "@react-native-community/eslint-config": "^3.0.2",
     "@release-it/conventional-changelog": "^5.0.0",
     "@types/jest": "^28.1.2",
-<<<<<<< Updated upstream
-    "@types/react": "~18.0.37",
-=======
     "@types/react": "~18.0.38",
->>>>>>> Stashed changes
     "@types/react-native": "0.70.0",
     "commitlint": "^17.0.2",
     "del-cli": "^5.0.0",
@@ -81,16 +77,8 @@
     "@types/react": "~18.0.37"
   },
   "peerDependencies": {
-<<<<<<< Updated upstream
-    "react": "18.1.0",
-    "react-native": "^0.70.6",
-    "react-native-webview": "^11.26.0"
-=======
     "react": "*",
-    "react-native": "*",
-    "react-native-webview": "^11.26.0",
-    "@react-native-async-storage/async-storage": "^1.17.11"
->>>>>>> Stashed changes
+    "react-native": "*"
   },
   "engines": {
     "node": ">= 16.0.0"
@@ -173,7 +161,6 @@
     "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/native-stack": "^6.9.8",
-    "expo": "^47.0.13",
     "global": "^4.4.0",
     "react-native-cli": "^2.0.1",
     "react-native-dotenv": "^3.4.6",
