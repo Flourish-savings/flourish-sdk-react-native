@@ -83,10 +83,12 @@ Then, with the SDK instance initialized, it is time to perform the authenticatio
 to do this, it's required that you pass a `customer_code`, and you can also pass a `category` this one isn't required.
 
 ```js
-  import { authenticateFlourish } from 'flourish-sdk-react-native';
+  import { authenticate } from 'flourish-sdk-react-native';
 
   const customerCode = process.env.CUSTOMER_CODE;
   const customerCode = process.env.CATEGORY;
+
+  authenticate(customerCode, category);
 ```
 
 Finally after initialization, you will be able to import and adding our Flourish component inside your screen, but remember

@@ -30,7 +30,8 @@ export const initializeFlourish = async (
 
 export const authenticate = async (
   clientCustomerCode: string,
-  category?: string
+  category?: string,
+  eventCallback?: (data: any) => void
 ) => {
   const partnerId = (await AsyncStorage.getItem('partnerId')) || '';
   const partnerSecret = (await AsyncStorage.getItem('partnerSecret')) || '';
@@ -45,9 +46,20 @@ export const authenticate = async (
   );
   if (response.access_token) {
     setToken(response.access_token);
-    signIn(response.access_token);
+    const signResponse = await signIn(response.access_token);
+    if (eventCallback) {
+      eventCallback({
+        success: 'The authentication process worked successfully',
+      });
+      console.log('AuthEventCallbackCalled');
+    }
+    return signResponse;
   } else {
     console.error(`Error fetching token: ${JSON.stringify(response)}`, []);
+    if (eventCallback) {
+      eventCallback({ error: 'The authentication process failed' });
+    }
+    return false;
   }
 };
 
