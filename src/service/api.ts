@@ -39,7 +39,7 @@ export class Api {
         }
       );
       const res = await response.json();
-      console.log(res);
+      console.log('successfully authenticated');
       return { access_token: res.access_token };
     } catch (error) {
       console.error(error);
@@ -62,8 +62,7 @@ export class Api {
           },
         }
       );
-      const res = await response.json();
-      console.log(res);
+      console.log('successfully logged in');
       return response.status === 200 ? { isValid: true } : { isValid: false };
     } catch (error) {
       console.error(error);

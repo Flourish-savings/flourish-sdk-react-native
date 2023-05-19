@@ -86,9 +86,14 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
     };
     getLocalParams();
     onEventReceived(props.eventCallback);
-  });
+  }, []);
+
   return (
-    <HomePage token={token} environment={environment} language={language} />
+    <>
+      {token !== '' && (
+        <HomePage token={token} environment={environment} language={language} />
+      )}
+    </>
   );
 };
 
