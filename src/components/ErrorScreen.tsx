@@ -2,12 +2,10 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
 const ErrorScreen = () => {
-  const errorText = 'Too long out. Renewing your experience';
-
   return (
-    <View>
+    <View style={styles.centered}>
       <Text style={styles.baseText}>
-        <Text numberOfLines={5}>{errorText}</Text>
+        <Text>Too long out{'\n'}Renewing your experience</Text>
       </Text>
       <ActivityIndicator size="large" color="#0000ff" />
     </View>
@@ -15,12 +13,16 @@ const ErrorScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  baseText: {
-    fontFamily: 'Cochin',
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  titleText: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  baseText: {
+    textAlign: 'center',
+    fontFamily: 'Cochin',
+    fontSize: 26,
+    marginBottom: 20,
   },
 });
 

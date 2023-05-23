@@ -32,9 +32,7 @@ const HomePage = (props: Props) => {
           }}
           javaScriptEnabled={true}
           onMessage={(event) => {
-            console.log(event);
             const data = JSON.parse(event.nativeEvent.data);
-            console.log('Event in WebView Component', data);
             emitEvent(data);
           }}
         />

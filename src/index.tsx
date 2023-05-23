@@ -1,20 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
+import HomePage from './components/HomePage';
+import ErrorScreen from './components/ErrorScreen';
+import { createStore } from 'zustand/vanilla';
 import { api } from './service/api';
 import { onEventReceived } from './events/eventManager';
-import HomePage from './components/HomePage';
-import {
-  setEnvironment,
-  setLanguage,
-  setPartnerId,
-  setPartnerSecret,
-  setToken,
-} from './store/flourishStore';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useState } from 'react';
 
 type ConfigProps = {
   eventCallback: (data: string) => void;
 };
+
+type State = {
+  partner: string;
+  secret: string;
+  language: string;
+  environment: string;
+  token: string;
+  customerCode?: string;
+  isError: boolean;
+};
+
+export const sdkStore = createStore<State>(() => ({
+  partner: '',
+  secret: '',
+  language: '',
+  environment: '',
+  token: '',
+  isError: false,
+}));
 
 export const initializeFlourish = async (
   partner: string,
@@ -22,10 +34,12 @@ export const initializeFlourish = async (
   language: string,
   environment: string
 ) => {
-  setLanguage(language);
-  setEnvironment(environment);
-  setPartnerId(partner);
-  setPartnerSecret(secret);
+  sdkStore.setState({
+    partner: partner,
+    secret: secret,
+    language: language,
+    environment: environment,
+  });
 };
 
 export const authenticate = async (
@@ -33,25 +47,30 @@ export const authenticate = async (
   category?: string,
   eventCallback?: (data: any) => void
 ) => {
-  const partnerId = (await AsyncStorage.getItem('partnerId')) || '';
-  const partnerSecret = (await AsyncStorage.getItem('partnerSecret')) || '';
-  const environment = (await AsyncStorage.getItem('environment')) || '';
+  const { partner, secret, environment, language } = sdkStore.getState();
 
   const response = await api.authenticate(
-    partnerId,
-    partnerSecret,
+    partner,
+    secret,
     environment,
     clientCustomerCode,
     category
   );
   if (response.access_token) {
-    setToken(response.access_token);
+    sdkStore.setState({
+      partner: partner,
+      secret: secret,
+      language: language,
+      environment: environment,
+      token: response.access_token,
+      customerCode: clientCustomerCode,
+      isError: false,
+    });
     const signResponse = await signIn(response.access_token);
     if (eventCallback) {
       eventCallback({
         success: 'The authentication process worked successfully',
       });
-      console.log('AuthEventCallbackCalled');
     }
     return signResponse;
   } else {
@@ -64,35 +83,31 @@ export const authenticate = async (
 };
 
 const signIn = async (access_token: string): Promise<boolean> => {
-  const environment = (await AsyncStorage.getItem('environment')) || '';
+  const { environment } = sdkStore.getState();
   const response = await api.signIn(access_token, environment);
   return response.isValid;
 };
 
 const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
-  const [token, setTokenState] = useState('');
-  const [environment, setEnvironmentState] = useState('');
-  const [language, setLanguageState] = useState('');
+  const [componentToken, setComponentToken] = useState();
+  const [error, setError] = useState(false);
 
-  useEffect(() => {
-    const getLocalParams = async () => {
-      const localToken = (await AsyncStorage.getItem('token')) || '';
-      const localEnvironment =
-        (await AsyncStorage.getItem('environment')) || '';
-      const localLanguage = (await AsyncStorage.getItem('language')) || '';
-      setTokenState(localToken);
-      setEnvironmentState(localEnvironment);
-      setLanguageState(localLanguage);
-    };
-    getLocalParams();
-    onEventReceived(props.eventCallback);
-  }, []);
+  const { language, environment, token } = sdkStore.getState();
+
+  const callback = (state: any) => {
+    setComponentToken(state.token);
+    setError(state.isError);
+  };
+
+  sdkStore.subscribe(callback);
+  onEventReceived(props.eventCallback);
 
   return (
     <>
-      {token !== '' && (
+      {componentToken !== '' && !error && (
         <HomePage token={token} environment={environment} language={language} />
       )}
+      {error && <ErrorScreen />}
     </>
   );
 };

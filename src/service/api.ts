@@ -39,7 +39,7 @@ export class Api {
         }
       );
       const res = await response.json();
-      console.log('successfully authenticated');
+      console.log('flourish sdk successfully authenticated');
       return { access_token: res.access_token };
     } catch (error) {
       console.error(error);
@@ -62,7 +62,7 @@ export class Api {
           },
         }
       );
-      console.log('successfully logged in');
+      console.log('flourish sdk successfully logged in');
       return response.status === 200 ? { isValid: true } : { isValid: false };
     } catch (error) {
       console.error(error);
