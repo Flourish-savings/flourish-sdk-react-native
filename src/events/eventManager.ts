@@ -1,6 +1,6 @@
 import { EventRegister } from 'react-native-event-listeners';
 import { sdkStore } from '../index';
-import { authenticate } from '../index';
+import { authenticateFlourish } from '../index';
 
 export const emitConfig = { GENERIC_EVENT: 'GENERIC_EVENT' };
 
@@ -12,7 +12,7 @@ export const emitEvent = (event: any) => {
       ...sdkStore.getState(),
       isError: true,
     });
-    authenticate(userCode);
+    authenticateFlourish(userCode);
   }
   EventRegister.emit(emitConfig.GENERIC_EVENT, event);
 };

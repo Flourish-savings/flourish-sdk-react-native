@@ -42,7 +42,7 @@ export const initializeFlourish = async (
   });
 };
 
-export const authenticate = async (
+export const authenticateFlourish = async (
   clientCustomerCode: string,
   category?: string,
   eventCallback?: (data: any) => void
