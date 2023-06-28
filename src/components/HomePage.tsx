@@ -14,8 +14,10 @@ const HomePage = (props: Props) => {
 
   useEffect(() => {
     const baseURL = Config.FRONTEND_API_URL.get(props.environment);
-    const endURL = `/?token=${props.token}`;
-    const completeURL = `${baseURL}${props.language}${endURL}`;
+    const tokenPath = `?token=${props.token}`;
+    const languagePath = `&lang=${props.language}`;
+    const completeURL = `${baseURL}${tokenPath}${languagePath}`;
+    console.log(completeURL);
     if (baseURL !== undefined && props.token !== undefined) setUrl(completeURL);
   }, [props.environment, props.language, props.token]);
 
