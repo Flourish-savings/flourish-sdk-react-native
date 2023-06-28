@@ -1,6 +1,6 @@
 {
   "name": "flourish-sdk-react-native",
-  "version": "1.4.3",
+  "version": "2.0.1-17",
   "description": "Flourish React Native SDK",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
