@@ -6,7 +6,7 @@ import { api } from './service/api';
 import { onEventReceived } from './events/eventManager';
 
 type ConfigProps = {
-  eventCallback: (data: string) => void;
+  eventCallback?: (data: string) => void;
 };
 
 type State = {
@@ -45,7 +45,7 @@ export const initializeFlourish = async (
 export const authenticate = async (
   clientCustomerCode: string,
   category?: string,
-  eventCallback?: (data: any) => void
+  authCallback?: (data: any) => void
 ) => {
   const { partner, secret, environment, language } = sdkStore.getState();
 
@@ -67,16 +67,16 @@ export const authenticate = async (
       isError: false,
     });
     const signResponse = await signIn(response.access_token);
-    if (eventCallback) {
-      eventCallback({
+    if (authCallback) {
+      authCallback({
         success: 'The authentication process worked successfully',
       });
     }
     return signResponse;
   } else {
     console.error(`Error fetching token: ${JSON.stringify(response)}`, []);
-    if (eventCallback) {
-      eventCallback({ error: 'The authentication process failed' });
+    if (authCallback) {
+      authCallback({ error: 'The authentication process failed' });
     }
     return false;
   }
@@ -100,7 +100,8 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
   };
 
   sdkStore.subscribe(callback);
-  onEventReceived(props.eventCallback);
+
+  if (props?.eventCallback) onEventReceived(props.eventCallback);
 
   return (
     <>

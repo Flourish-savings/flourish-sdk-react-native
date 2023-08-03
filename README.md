@@ -102,17 +102,7 @@ that all our functionalities are displayed through a webview.
   );
 ```
 
-After a successful rendering, you should see something like this.
-
-<img width="363" src="https://raw.githubusercontent.com/Flourish-savings/flourish-sdk-flutter/main/images/flourish_home.png"/>
-<br>
-<br>
-<img width="363" src="https://raw.githubusercontent.com/Flourish-savings/flourish-sdk-flutter/main/images/flourish_wheel.png"/>
-<br>
-<br>
-
 ---
-
 
 ## EVENTS
 ___
@@ -135,12 +125,14 @@ const RewardsScreen = () => {
 ### Events to listen
 here you have all events we will return
 
-| event name      | description                                                                                |
-|-----------------|--------------------------------------------------------------------------------------------|
-| GoToAutoPayment | When you need to know when the user clicks to set up an automatic payment on our platform. |
-| GoToPayment     | When you need to know when the user clicks to set up a payment on our platform.            |
-| TriviaFinished  | When you need to know when the user finishes a Trivia game on our platform.                |
-| GoBack          | When you need to know when the user clicks on the back menu button on our platform.        |
+| Event name      | Description                                                                                                       |
+|-----------------|-------------------------------------------------------------------------------------------------------------------|
+| BACK_BUTTON_PRESSED | When you need to know when the user clicks on the back menu button on our platform.                        |
+| MISSION_ACTION     | When you need to know when the user clicks on a mission card                                |
+| TRIVIA_GAME_FINISHED  | When you need to know when the user finishes a Trivia game on our platform.                                       |
+| REFERRAL_COPY          | When you need to know when the user copy the referral code to the clipboard area.                             |
+| HOME_BANNER_ACTION      | When you need to know when the user clicks on the home banner.       |
+| ERROR      | When you need to know when a error happened.      |
 
 
 
