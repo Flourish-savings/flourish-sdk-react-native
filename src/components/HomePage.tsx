@@ -27,10 +27,6 @@ const HomePage = (props: Props) => {
           source={{
             uri: `${url}`,
           }}
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{
-            marginTop: 45,
-          }}
           javaScriptEnabled={true}
           onMessage={(event) => {
             const data = JSON.parse(event.nativeEvent.data);
