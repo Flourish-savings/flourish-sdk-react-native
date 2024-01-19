@@ -1,6 +1,6 @@
 {
   "name": "flourish-sdk-react-native",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "Flourish React Native SDK",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -61,7 +61,7 @@
     "react-native-cli": "^2.0.1",
     "react-native-dotenv": "^3.4.6",
     "react-native-event-listeners": "^1.0.7",
-    "react-native-webview": "^11.26.0",
+    "react-native-webview": "^13.6.3",
     "zustand": "^4.3.8"
   },
   "devDependencies": {
