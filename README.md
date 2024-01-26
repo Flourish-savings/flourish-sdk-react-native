@@ -54,8 +54,6 @@ This plugin can be run in two different environments:
 
 - staging: In this environment, you can test the functionality without impacting any real data
 - production: this environment is for running the app with the real data
-<br>
-<br>
 
 ### About the SDK
 
@@ -66,29 +64,21 @@ the sdk serves to encapsulate and help in loading this webview.
 ### Using the SDK
 ___
 
-First foremost, it is necessary to initialize the SDK providing the variables: `partnerId`, `secret`, `env` and `language`.
+First foremost, it is necessary to initialize the SDK providing the variables: `partnerId`, `secret`, `env`, `language` and `customer_code`.
+
+You can also pass a `category` this one isn't required.
 
 ```js
-  import { initializeFlourish } from 'flourish-sdk-react-native';
+  import { initialize } from 'flourish-sdk-react-native';
 
   const partnerId = process.env.PARTNER_ID;
   const partnerSecret = process.env.PARTNER_SECRET;
   const language = process.env.LANGUAGE;
   const environment = process.env.ENVIRONMENT;
+  const customerCode = 'YOUR-CUSTOMER-CODE';
+  const category = 'CATEGORY-VALUE';
 
-  initializeFlourish(partnerId, partnerSecret, language, environment);
-```
-
-Then, with the SDK instance initialized, it is time to perform the authentication in our backend,
-to do this, it's required that you pass a `customer_code`, and you can also pass a `category` this one isn't required.
-
-```js
-  import { authenticate } from 'flourish-sdk-react-native';
-
-  const customerCode = process.env.CUSTOMER_CODE;
-  const customerCode = process.env.CATEGORY;
-
-  authenticate(customerCode, category);
+  initialize(partnerId, partnerSecret, language, environment, customerCode, category);
 ```
 
 Finally after initialization, you will be able to import and adding our Flourish component inside your screen, but remember
