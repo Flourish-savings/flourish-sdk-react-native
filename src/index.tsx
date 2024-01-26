@@ -28,11 +28,14 @@ export const sdkStore = createStore<State>(() => ({
   isError: false,
 }));
 
-export const initializeFlourish = async (
+export const initialize = async (
   partner: string,
   secret: string,
   language: string,
-  environment: string
+  environment: string,
+  clientCustomerCode: string,
+  category?: string,
+  authCallback?: (data: any) => void
 ) => {
   sdkStore.setState({
     partner: partner,
@@ -40,6 +43,8 @@ export const initializeFlourish = async (
     language: language,
     environment: environment,
   });
+
+  await authenticate(clientCustomerCode, category, authCallback);
 };
 
 export const authenticate = async (
