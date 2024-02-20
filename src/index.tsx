@@ -3,10 +3,28 @@ import HomePage from './components/HomePage';
 import ErrorScreen from './components/ErrorScreen';
 import { createStore } from 'zustand/vanilla';
 import { api } from './service/api';
-import { onEventReceived } from './events/eventManager';
+import {
+  onGenericEventReceived,
+  onBackButtonReceived,
+  onHomeBackButtonReceived,
+  onTriviaGameFinishedReceived,
+  onMissionActionReceived,
+  onTriviaClosedReceived,
+  onReferralCopyReceived,
+  onHomeBannerActionReceived,
+  onGiftCardCopyReceived,
+} from './events/eventManager';
 
 type ConfigProps = {
-  eventCallback?: (data: string) => void;
+  genericEventCallback?: (data: string) => void;
+  backButtonEventCallback?: (data: string) => void;
+  homeBackButtonEventCallback?: (data: string) => void;
+  triviaGameFinishedEventCallback?: (data: string) => void;
+  missionActionEventCallback?: (data: string) => void;
+  triviaClosedEventCallback?: (data: string) => void;
+  referralCopyEventCallback?: (data: string) => void;
+  homeBannerActionEventCallback?: (data: string) => void;
+  giftCardCopyEventCallback?: (data: string) => void;
 };
 
 type State = {
@@ -106,7 +124,24 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
 
   sdkStore.subscribe(callback);
 
-  if (props?.eventCallback) onEventReceived(props.eventCallback);
+  if (props?.genericEventCallback)
+    onGenericEventReceived(props.genericEventCallback);
+  if (props?.backButtonEventCallback)
+    onBackButtonReceived(props.backButtonEventCallback);
+  if (props?.homeBackButtonEventCallback)
+    onHomeBackButtonReceived(props.homeBackButtonEventCallback);
+  if (props?.triviaGameFinishedEventCallback)
+    onTriviaGameFinishedReceived(props.triviaGameFinishedEventCallback);
+  if (props?.missionActionEventCallback)
+    onMissionActionReceived(props.missionActionEventCallback);
+  if (props?.triviaClosedEventCallback)
+    onTriviaClosedReceived(props.triviaClosedEventCallback);
+  if (props?.referralCopyEventCallback)
+    onReferralCopyReceived(props.referralCopyEventCallback);
+  if (props?.homeBannerActionEventCallback)
+    onHomeBannerActionReceived(props.homeBannerActionEventCallback);
+  if (props?.giftCardCopyEventCallback)
+    onGiftCardCopyReceived(props.giftCardCopyEventCallback);
 
   return (
     <>
