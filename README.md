@@ -98,28 +98,55 @@ that all our functionalities are displayed through a webview.
 ___
 You can register for some events to know when something happens within our platform.
 
-### Listen our events
-To listen to our events, you will pass a callback function to our Flourish component when you add it to your screen.
+### Listen all our events
+To listen all our events, you will pass a generic callback function to our Flourish component when you add it to your screen.
 
 ```js
 import Flourish from 'flourish-sdk-react-native';
 
-const printEventData = (data: string): void => {
+const genericEventCallback = (data: string): void => {
   console.log('Event Client side', data);
 };
 
 const RewardsScreen = () => {
-  return <Flourish eventCallback={printEventData} />;
+  return <Flourish genericEventCallback={genericEventCallback} />;
 };
 ```
+
+### Listen only to a specific event
+To listen to only a specific event you will pass a function to an attribute referring to the event you want to listen to.
+
+For example, if you want to be notified when a Trivia game ends, you can pass a callback function in the attribute called: "triviaGameFinishedEventCallback"
+
+```js
+import Flourish from 'flourish-sdk-react-native';
+
+const triviaGameFinishedEventCallback = (data: string): void => {
+  console.log('Event Client side', data);
+};
+
+const RewardsScreen = () => {
+  return (
+    <Flourish
+      triviaGameFinishedEventCallback={triviaGameFinishedEventCallback}
+    />
+  );
+};
+```
+
+
+
 ### Events to listen
 here you have all events we will return
 
 | Event name      | Description                                                                                                       |
 |-----------------|-------------------------------------------------------------------------------------------------------------------|
-| BACK_BUTTON_PRESSED | When you need to know when the user clicks on the back menu button on our platform.                        |
+| BACK_BUTTON_PRESSED | When you need to know when the user clicks on the back menu button on our platform.
+| HOME_BACK_BUTTON_PRESSED | When you need to know when the user clicks on the back menu button when on the home screen of our platform.           |
 | MISSION_ACTION     | When you need to know when the user clicks on a mission card                                |
 | TRIVIA_GAME_FINISHED  | When you need to know when the user finishes a Trivia game on our platform.                                       |
+| TRIVIA_CLOSED  | When you need to know when the user closed the Trivia game on our platform.                                       |
+| GIFT_CARD_COPY  | When you need to know when the user copy the Gift code to the clipboard area.                                       |
 | REFERRAL_COPY          | When you need to know when the user copy the referral code to the clipboard area.                             |
 | HOME_BANNER_ACTION      | When you need to know when the user clicks on the home banner.       |
 | ERROR      | When you need to know when a error happened.      |
