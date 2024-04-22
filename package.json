@@ -30,10 +30,11 @@
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "release": "release-it",
+    "release": "release-it --'hooks.before:init=npm run prepare-version'",
     "example": "yarn --cwd example",
     "bootstrap": "yarn example && yarn install",
-    "build": "bob build"
+    "build": "bob build && yarn prepare-version",
+    "prepare-version": "sed -i -e 's/#FLOURISH_SDK_APP_VERSION#/'$npm_package_version'/g' ./lib/*/config/*.js"
   },
   "keywords": [
     "react-native",
@@ -54,14 +55,14 @@
     "@types/jest": "^28.1.2",
     "@types/react": "18.2.0",
     "@types/react-native": "0.71.8",
-    "react": "18.2.0",
-    "react-native": "0.71.8",
-    "typescript": "^4.5.2",
     "global": "^4.4.0",
+    "react": "*",
+    "react-native": "*",
     "react-native-cli": "^2.0.1",
     "react-native-dotenv": "^3.4.6",
     "react-native-event-listeners": "^1.0.7",
     "react-native-webview": "^13.6.3",
+    "typescript": "^4.5.2",
     "zustand": "^4.3.8"
   },
   "devDependencies": {

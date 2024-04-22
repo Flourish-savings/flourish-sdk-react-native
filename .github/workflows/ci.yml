@@ -45,4 +45,9 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build package
-        run: yarn prepack
+        run: yarn build
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish
+        run: yarn publish

@@ -53,7 +53,7 @@ export class Api {
   ): Promise<{ isValid: boolean }> {
     try {
       const response = await fetch(
-        `${Config.BACKEND_API_URL.get(environment)}/sign_in`,
+        `${Config.BACKEND_API_URL.get(environment)}/sign_in?sdk_version=${Config.FLOURISH_SDK_APP_VERSION.get(environment)}`,
         {
           method: 'POST',
           headers: {
@@ -62,7 +62,7 @@ export class Api {
           },
         }
       );
-      console.log('flourish sdk successfully logged in');
+      console.log(`flourish sdk successfully logged in with${Config.FLOURISH_SDK_APP_VERSION.get(environment)}`);
       return response.status === 200 ? { isValid: true } : { isValid: false };
     } catch (error) {
       console.error(error);

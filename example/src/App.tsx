@@ -6,7 +6,7 @@ import HomeScreen from './HomeScreen';
 import RewardsScreen from './RewardsScreen';
 import FavoriteScreen from './FavoriteScreen';
 import NotificationScreen from './NotificationScreen';
-import { initializeFlourish } from 'flourish-sdk-react-native';
+import { initialize } from 'flourish-sdk-react-native';
 
 export default function App() {
   const [index, setIndex] = useState(0);
@@ -42,7 +42,7 @@ export default function App() {
     const partnerSecret = process.env.PARTNER_SECRET;
     const language = process.env.LANGUAGE;
     const environment = process.env.ENVIRONMENT;
-    initializeFlourish(partnerId, partnerSecret, language, environment);
+    initialize(partnerId, partnerSecret, language, environment);
   }, []);
 
   const renderScene = BottomNavigation.SceneMap({
