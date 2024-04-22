@@ -16,7 +16,8 @@ const HomePage = (props: Props) => {
     const baseURL = Config.FRONTEND_API_URL.get(props.environment);
     const tokenPath = `?token=${props.token}`;
     const languagePath = `&lang=${props.language}`;
-    const completeURL = `${baseURL}${tokenPath}${languagePath}`;
+    const versionPath = `&sdk_version=${Config.FLOURISH_SDK_APP_VERSION.get(props.environment)}`
+    const completeURL = `${baseURL}${tokenPath}${languagePath}${versionPath}`;
     if (baseURL !== undefined && props.token !== undefined) setUrl(completeURL);
   }, [props.environment, props.language, props.token]);
 

@@ -1,6 +1,6 @@
 {
   "name": "flourish-sdk-react-native",
-  "version": "2.6.1",
+  "version": "2.6.2-candidate.3",
   "description": "Flourish React Native SDK",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -34,7 +34,8 @@
     "example": "yarn --cwd example",
     "bootstrap": "yarn example && yarn install",
     "build": "bob build && yarn prepare-version",
-    "prepare-version": "sed -i -e 's/#FLOURISH_SDK_APP_VERSION#/'$npm_package_version'/g' ./lib/*/config/*.js"
+    "prepare-version": "sed -i -e 's/#FLOURISH_SDK_APP_VERSION#/'$npm_package_version'/g' ./lib/*/config/*.js",
+    "build-ci": "sed -i -e 's/#FLOURISH_SDK_APP_VERSION#/'$npm_package_version'/g' ./src/config/*.ts && bob build"
   },
   "keywords": [
     "react-native",
@@ -89,9 +90,8 @@
     "react-native": "*"
   },
   "engines": {
-    "node": ">= 16.0.0"
+    "node": ">= 18.16.0"
   },
-  "packageManager": "^yarn@1.22.15",
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
