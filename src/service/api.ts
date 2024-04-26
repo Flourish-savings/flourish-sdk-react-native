@@ -18,13 +18,13 @@ export class Api {
       let body: BodyApi = {
         partner_uuid: partnerId,
         partner_secret: partnerSecret,
-        customer_code: customerCode,
+        customer_code: customerCode
       };
 
       if (category) {
         body = {
           ...body,
-          category: category,
+          category: category
         };
       }
 
@@ -33,9 +33,9 @@ export class Api {
         {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(body),
+          body: JSON.stringify(body)
         }
       );
       const res = await response.json();
@@ -59,10 +59,17 @@ export class Api {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${access_token}`,
+            'Sdk-Version': `${
+              Config.FLOURISH_SDK_APP_VERSION.get(environment) as string
+            }`,
           },
         }
       );
-      console.log('flourish sdk successfully logged in');
+      console.log(
+        `flourish sdk successfully logged in with ${Config.FLOURISH_SDK_APP_VERSION.get(
+          environment
+        )}`
+      );
       return response.status === 200 ? { isValid: true } : { isValid: false };
     } catch (error) {
       console.error(error);
