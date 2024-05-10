@@ -97,7 +97,6 @@ export const authenticate = async (
     }
     return signResponse;
   } else {
-    console.error(`Error fetching token: ${JSON.stringify(response)}`, []);
     if (authCallback) {
       authCallback({ error: 'The authentication process failed' });
     }

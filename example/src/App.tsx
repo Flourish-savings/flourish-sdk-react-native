@@ -7,8 +7,10 @@ import RewardsScreen from './RewardsScreen';
 import FavoriteScreen from './FavoriteScreen';
 import NotificationScreen from './NotificationScreen';
 import { initialize } from 'flourish-sdk-react-native';
+import { LogBox } from 'react-native';
 
 export default function App() {
+  LogBox.ignoreAllLogs();
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     {
@@ -42,7 +44,8 @@ export default function App() {
     const partnerSecret = process.env.PARTNER_SECRET;
     const language = process.env.LANGUAGE;
     const environment = process.env.ENVIRONMENT;
-    initialize(partnerId, partnerSecret, language, environment);
+    const customerCode = process.env.CUSTOMER_CODE;
+    initialize(partnerId, partnerSecret, language, environment, customerCode);
   }, []);
 
   const renderScene = BottomNavigation.SceneMap({
