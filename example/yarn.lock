@@ -5337,10 +5337,10 @@ find-yarn-workspace-root@~2.0.0:
   dependencies:
     micromatch "^4.0.2"
 
-flourish-sdk-react-native@2.6.4:
-  version "2.6.4"
-  resolved "https://registry.yarnpkg.com/flourish-sdk-react-native/-/flourish-sdk-react-native-2.6.4.tgz#e73c23082d68a1382979b7d177f8036e22bb39da"
-  integrity sha512-WhetCgIVq8hcmyL1i9XZvTFkHh41rHVwxWwgrRvdXI77kFTQ9wKHBOdFUkI7axLuw5YQiKPpVB47CbwpmvJ4AA==
+flourish-sdk-react-native@2.7.0-candidate:
+  version "2.7.0-candidate"
+  resolved "https://registry.yarnpkg.com/flourish-sdk-react-native/-/flourish-sdk-react-native-2.7.0-candidate.tgz#32188b556125f4fa6fc6ac35022d358fdb2aea7e"
+  integrity sha512-9eGzfte3lfgrhZSG0MeTvCX0JNbS3tOdw/bTwDHLea6QuS2mzW5N3taC+oabSm0gYMwLkKGJme/LuJZMGbfpsA==
   dependencies:
     "@types/jest" "^28.1.2"
     "@types/react" "18.2.0"
@@ -9362,6 +9362,14 @@ react-native-web@~0.18.9:
     normalize-css-color "^1.0.2"
     postcss-value-parser "^4.2.0"
     styleq "^0.1.2"
+
+react-native-webview@^11.26.1:
+  version "11.26.1"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.26.1.tgz#658c09ed5162dc170b361e48c2dd26c9712879da"
+  integrity sha512-hC7BkxOpf+z0UKhxFSFTPAM4shQzYmZHoELa6/8a/MspcjEP7ukYKpuSUTLDywQditT8yI9idfcKvfZDKQExGw==
+  dependencies:
+    escape-string-regexp "2.0.0"
+    invariant "2.2.4"
 
 react-native-webview@^13.6.3:
   version "13.10.0"
