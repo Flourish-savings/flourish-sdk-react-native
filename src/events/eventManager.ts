@@ -1,6 +1,7 @@
 import { EventRegister } from 'react-native-event-listeners';
 import { sdkStore } from '../index';
 import { authenticate } from '../index';
+import { Share } from 'react-native';
 
 export const emitConfig = { GENERIC_EVENT: 'GENERIC_EVENT' };
 
@@ -62,7 +63,12 @@ const onMissionActionReceived = (eventCallback: (arg: any) => any) => {
 const onReferralCopyReceived = (eventCallback: (arg: any) => any) => {
   EventRegister.removeAllListeners();
   EventRegister.addEventListener(emitConfig.GENERIC_EVENT, (data) => {
-    if (data.eventName === 'REFERRAL_COPY') eventCallback(data);
+    if (data.eventName === 'REFERRAL_COPY') {
+      Share.share({
+        message: data.referralCode,
+      });
+      eventCallback(data);
+    }
   });
 };
 
