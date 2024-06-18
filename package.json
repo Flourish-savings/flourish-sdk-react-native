@@ -1,6 +1,6 @@
 {
   "name": "flourish-sdk-react-native",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "description": "Flourish React Native SDK",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -90,7 +90,7 @@
     "react-native": "*"
   },
   "engines": {
-    "node": ">= 18.16.0"
+    "node": ">= 18.12.0"
   },
   "jest": {
     "preset": "react-native",
