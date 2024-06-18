@@ -50,12 +50,11 @@ export default function App() {
     const webViewOptions: WebViewOptions = {
       androidLayerType: 'software',
       scalesPageToFit: true,
-      javaScriptEnabled: true,
       domStorageEnabled: true,
       scrollEnabled: true,
       setBuiltInZoomControls: true,
       bounces: true,
-      style: '',
+      style: 'marginTop: 20',
     };
 
     initialize(partnerId, partnerSecret, language, environment, customerCode, '', webViewOptions);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { emitEvent } from '../events/eventManager';
 import { WebView } from 'react-native-webview';
 import Config from '../config';
-import type { LayerType, WebViewOptions } from './CustomWebView';
+import type { WebViewOptions } from './CustomWebView';
 
 type Props = {
   token: string;
@@ -13,19 +13,6 @@ type Props = {
 
 const HomePage = (props: Props) => {
   const [url, setUrl] = useState('');
-  const [layerType, setLayerType] = useState<LayerType>('none');
-
-  switch (props.webViewProps?.androidLayerType) {
-    case 'software':
-      setLayerType(props.webViewProps.androidLayerType);
-      break;
-    case 'hardware':
-      setLayerType('hardware');
-      break;  
-    default:
-      setLayerType('none');
-      break;
-  }
   
   useEffect(() => {
     const baseURL = Config.FRONTEND_API_URL.get(props.environment);
@@ -45,9 +32,8 @@ const HomePage = (props: Props) => {
           source={{
             uri: `${url}`,
           }}
-          androidLayerType={layerType}
+          androidLayerType={props.webViewProps?.androidLayerType || 'none'}
           scalesPageToFit={props.webViewProps?.scalesPageToFit || false}
-          javaScriptEnabled={props.webViewProps?.javaScriptEnabled || true}
           domStorageEnabled={props.webViewProps?.domStorageEnabled || false}
           scrollEnabled={props.webViewProps?.scrollEnabled || false}
           setBuiltInZoomControls={props.webViewProps?.setBuiltInZoomControls || false}

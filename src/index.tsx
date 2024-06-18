@@ -122,6 +122,8 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
 
   const { language, environment, token, webViewProps } = sdkStore.getState();
 
+  console.log('WebViewProps', webViewProps);
+
   const callback = (state: any) => {
     setComponentToken(state.token);
     setError(state.isError);

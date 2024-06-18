@@ -92,7 +92,6 @@ You can customize the webview component if you prefer, just initialize one of ou
   const webViewOptions: WebViewOptions = {
     androidLayerType: 'software',
     scalesPageToFit: true,
-    javaScriptEnabled: true,
     domStorageEnabled: true,
     scrollEnabled: true,
     setBuiltInZoomControls: true,
