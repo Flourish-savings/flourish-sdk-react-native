@@ -81,6 +81,28 @@ You can also pass a `category` this one isn't required.
   initialize(partnerId, partnerSecret, language, environment, customerCode, category);
 ```
 
+### WebView options
+
+You can customize the webview component if you prefer, just initialize one of our configuration objects (WebViewOptions) and pass it in the initialization as the last parameter::
+
+```js
+  import type { WebViewOptions } from 'src/components/
+  CustomWebView';
+
+  const webViewOptions: WebViewOptions = {
+    androidLayerType: 'software',
+    scalesPageToFit: true,
+    domStorageEnabled: true,
+    scrollEnabled: true,
+    setBuiltInZoomControls: true,
+    bounces: true,
+    style: 'marginTop: 20',
+  };
+
+  initialize(partnerId, partnerSecret, language, environment, customerCode, category, webViewOptions);
+```
+
+
 Finally after initialization, you will be able to import and adding our Flourish component inside your screen, but remember
 that all our functionalities are displayed through a webview.
 

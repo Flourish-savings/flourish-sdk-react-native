@@ -8,6 +8,7 @@ import FavoriteScreen from './FavoriteScreen';
 import NotificationScreen from './NotificationScreen';
 import { initialize } from 'flourish-sdk-react-native';
 import { LogBox } from 'react-native';
+import type { WebViewOptions } from 'src/components/CustomWebView';
 
 export default function App() {
   LogBox.ignoreAllLogs();
@@ -45,7 +46,18 @@ export default function App() {
     const language = process.env.LANGUAGE;
     const environment = process.env.ENVIRONMENT;
     const customerCode = process.env.CUSTOMER_CODE;
-    initialize(partnerId, partnerSecret, language, environment, customerCode);
+
+    const webViewOptions: WebViewOptions = {
+      androidLayerType: 'software',
+      scalesPageToFit: true,
+      domStorageEnabled: true,
+      scrollEnabled: true,
+      setBuiltInZoomControls: true,
+      bounces: true,
+      style: 'marginTop: 20',
+    };
+
+    initialize(partnerId, partnerSecret, language, environment, customerCode, '', webViewOptions);
   }, []);
 
   const renderScene = BottomNavigation.SceneMap({
