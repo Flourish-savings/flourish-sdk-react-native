@@ -5,5 +5,6 @@ export type WebViewOptions = {
     scrollEnabled: boolean;
     setBuiltInZoomControls: boolean;
     bounces: boolean;
+    injectedJavaScript: string;
     style: string;
 };
