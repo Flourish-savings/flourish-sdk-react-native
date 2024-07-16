@@ -165,6 +165,7 @@ here you have all events we will return
 |-----------------|-------------------------------------------------------------------------------------------------------------------|
 | BACK_BUTTON_PRESSED | When you need to know when the user clicks on the back menu button on our platform.
 | HOME_BACK_BUTTON_PRESSED | When you need to know when the user clicks on the back menu button when on the home screen of our platform.           |
+| ONBOARDING_BACK_BUTTON_PRESSED | When you need to know when the user clicks on the back menu button when on the onboarding screen of our platform.           |
 | MISSION_ACTION     | When you need to know when the user clicks on a mission card                                |
 | TRIVIA_GAME_FINISHED  | When you need to know when the user finishes a Trivia game on our platform.                                       |
 | TRIVIA_CLOSED  | When you need to know when the user closed the Trivia game on our platform.                                       |
