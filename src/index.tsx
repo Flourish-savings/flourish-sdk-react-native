@@ -3,7 +3,6 @@ import HomePage from './components/HomePage';
 import ErrorScreen from './components/ErrorScreen';
 import { createStore } from 'zustand/vanilla';
 import { api } from './service/api';
-import type { WebViewOptions } from './components/CustomWebView';
 
 import {
   onGenericEventReceived,
@@ -49,6 +48,17 @@ export const sdkStore = createStore<State>(() => ({
   webViewProps: null || undefined,
   isError: false,
 }));
+
+export type WebViewOptions = {
+  androidLayerType?: 'none' | 'software' | 'hardware';
+  scalesPageToFit?: boolean;
+  domStorageEnabled?: boolean;
+  scrollEnabled?: boolean;
+  setBuiltInZoomControls?: boolean;
+  bounces?: boolean;
+  injectedJavaScript?: string;
+  style?: string;
+};
 
 export const initialize = async (
   partner: string,
@@ -123,6 +133,8 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
   const { language, environment, token, webViewProps } = sdkStore.getState();
 
   console.log('WebViewProps', webViewProps);
+
+  console.log('TOKEN', token);
 
   const callback = (state: any) => {
     setComponentToken(state.token);

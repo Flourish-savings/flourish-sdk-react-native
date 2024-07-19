@@ -42,7 +42,7 @@ export class Api {
       console.log('flourish sdk successfully authenticated');
       return { access_token: res.access_token };
     } catch (error) {
-      console.error(error);
+      console.error('Error when try to retrieve token', error);
       return { access_token: '' };
     }
   }
