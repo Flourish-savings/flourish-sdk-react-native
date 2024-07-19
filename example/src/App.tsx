@@ -6,9 +6,8 @@ import HomeScreen from './HomeScreen';
 import RewardsScreen from './RewardsScreen';
 import FavoriteScreen from './FavoriteScreen';
 import NotificationScreen from './NotificationScreen';
-import { initialize } from 'flourish-sdk-react-native';
+import { WebViewOptions, initialize } from 'flourish-sdk-react-native';
 import { LogBox } from 'react-native';
-import type { WebViewOptions } from 'src/components/CustomWebView';
 
 export default function App() {
   LogBox.ignoreAllLogs();

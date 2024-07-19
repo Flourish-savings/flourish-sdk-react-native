@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { emitEvent } from '../events/eventManager';
 import { WebView } from 'react-native-webview';
 import Config from '../config';
-import type { WebViewOptions } from './CustomWebView';
 import type { WebViewErrorEvent } from 'react-native-webview/lib/WebViewTypes';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import type { WebViewOptions } from 'flourish-sdk-react-native';
 
 type Props = {
   token: string;
@@ -20,18 +20,6 @@ const HomePage = (props: Props) => {
   const [errorTitle, setErrorTitle] = useState('');
   const [errorDescription, setErrorDescription] = useState('');
   const [errorButtonText, setErrorButtonText] = useState('');
-
-
-  switch (props.language) {
-    case 'en':
-      setErrorTitle('No internet \n connection');
-      setErrorDescription('Please, make sure your internet \n connection is working and try again!');
-      setErrorButtonText('Try again');
-      break;
-  
-    default:
-      break;
-  }
   
   useEffect(() => {
     const baseURL = Config.FRONTEND_API_URL.get(props.environment);
@@ -42,6 +30,27 @@ const HomePage = (props: Props) => {
     }`;
     const completeURL = `${baseURL}${tokenPath}${languagePath}${versionPath}`;
     if (baseURL !== undefined && props.token !== undefined) setUrl(completeURL);
+
+    switch (props.language) {
+      case 'en':
+        setErrorTitle('No internet \n connection');
+        setErrorDescription('Please, make sure your internet \n connection is working and try again!');
+        setErrorButtonText('Try again');
+        break;
+      case 'es':
+        setErrorTitle('No hay conexión \n a internet');
+        setErrorDescription('Por favor, asegúrese de que su conexión a \n internet esté funcionando correctamente \n e intente nuevamente.');
+        setErrorButtonText('Intentar  nuevamente');
+        break;  
+      case 'pt':
+        setErrorTitle('Não há conexão \n de internet');
+        setErrorDescription('Por favor, assegura-se de que sua \n conexão com a internet está funcionando \n corretamente e tente novamente');
+        setErrorButtonText('Tentar novamente');
+        break;  
+    
+      default:
+        break;
+    }
   }, [props.environment, props.language, props.token]);
 
   const handleError = (event: WebViewErrorEvent) => {
@@ -57,16 +66,16 @@ const HomePage = (props: Props) => {
   return (
     <View style={styles.container}>
     {hasError ? (
-      <View style={styles.errorContainer}>
-        <Image source={require('../resource/no-wifi.png')} style={styles.image} />
-        <Text style={styles.title}>{errorTitle}</Text>
-        <Text style={styles.message}>
-          {errorDescription}
-        </Text>
-        <TouchableOpacity style={styles.button} onPress={handleRetry}>
-          <Text style={styles.buttonText}>{errorButtonText}</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.errorContainer}>
+          <Image source={require('../resource/no-wifi.png')} style={styles.image} />
+          <Text style={styles.title}>{errorTitle}</Text>
+          <Text style={styles.message}>
+            {errorDescription}
+          </Text>
+          <TouchableOpacity style={styles.button} onPress={handleRetry}>
+            <Text style={styles.buttonText}>{errorButtonText}</Text>
+          </TouchableOpacity>
+        </View>
     ) : (
       <>
       {url !== '' && (
@@ -107,27 +116,37 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     marginBottom: 20,
   },
   title: {
+    textAlign: 'center',
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
   },
   message: {
     textAlign: 'center',
-    marginBottom: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 50,
   },
   button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'stretch',
     backgroundColor: '#ddd',
-    paddingVertical: 10,
+    paddingVertical: 20,
     paddingHorizontal: 20,
-    borderRadius: 5,
+    marginLeft: 30,
+    marginRight: 30,
+    borderRadius: 10,
+    textAlign: 'center',
   },
   buttonText: {
     fontSize: 16,
+    textAlign: 'center',
   },
 });
 
