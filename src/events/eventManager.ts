@@ -6,7 +6,7 @@ import { Share } from 'react-native';
 export const emitConfig = { GENERIC_EVENT: 'GENERIC_EVENT' };
 
 export const emitEvent = (event: any) => {
-  if (event?.data?.code === 'FE0003') {
+  if (event?.eventName === 'INVALID_TOKEN') {
     const { customerCode } = sdkStore.getState();
     const userCode: string = customerCode !== undefined ? customerCode : '';
     sdkStore.setState({

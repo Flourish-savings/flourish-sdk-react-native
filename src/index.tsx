@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import HomePage from './components/HomePage';
-import ErrorScreen from './components/ErrorScreen';
+import RefreshTokenScreen from './components/RefreshTokenScreen';
 import { createStore } from 'zustand/vanilla';
 import { api } from './service/api';
-
+import GenericErrorScreen from './components/GenericErrorScreen';
 import {
   onGenericEventReceived,
   onBackButtonReceived,
@@ -15,6 +15,7 @@ import {
   onHomeBannerActionReceived,
   onGiftCardCopyReceived,
 } from './events/eventManager';
+
 
 type ConfigProps = {
   genericEventCallback?: (data: string) => void;
@@ -114,7 +115,7 @@ export const authenticate = async (
     return signResponse;
   } else {
     if (authCallback) {
-      authCallback({ error: 'The authentication process failed' });
+      authCallback({eventName:'AUTHENTICATION_FAILURE'});
     }
     return false;
   }
@@ -131,10 +132,6 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
   const [error, setError] = useState(false);
 
   const { language, environment, token, webViewProps } = sdkStore.getState();
-
-  console.log('WebViewProps', webViewProps);
-
-  console.log('TOKEN', token);
 
   const callback = (state: any) => {
     setComponentToken(state.token);
@@ -162,14 +159,27 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
   if (props?.giftCardCopyEventCallback)
     onGiftCardCopyReceived(props.giftCardCopyEventCallback);
 
+  if(!token && !error){
+    if(props.genericEventCallback){
+      const data = JSON.stringify({"eventName":"AUTHENTICATION_FAILURE"});
+      props.genericEventCallback(data);
+    }
+    return <GenericErrorScreen onBackButtonEvent={props.genericEventCallback} />
+  }
+
+  if(error){
+    return <RefreshTokenScreen />
+  }
+
   return (
     <>
       {componentToken !== '' && !error && (
         <HomePage token={token} environment={environment} language={language} webViewProps={webViewProps}/>
       )}
-      {error && <ErrorScreen />}
+      {error && <RefreshTokenScreen />}
     </>
   );
+
 };
 
 export default Flourish;

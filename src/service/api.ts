@@ -39,7 +39,6 @@ export class Api {
         }
       );
       const res = await response.json();
-      console.log('flourish sdk successfully authenticated');
       return { access_token: res.access_token };
     } catch (error) {
       console.error('Error when try to retrieve token', error);
@@ -64,11 +63,6 @@ export class Api {
             }`,
           },
         }
-      );
-      console.log(
-        `flourish sdk successfully logged in with ${Config.FLOURISH_SDK_APP_VERSION.get(
-          environment
-        )}`
       );
       return response.status === 200 ? { isValid: true } : { isValid: false };
     } catch (error) {

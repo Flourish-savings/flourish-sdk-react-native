@@ -3,7 +3,7 @@ import { emitEvent } from '../events/eventManager';
 import { WebView } from 'react-native-webview';
 import Config from '../config';
 import type { WebViewErrorEvent } from 'react-native-webview/lib/WebViewTypes';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import type { WebViewOptions } from 'flourish-sdk-react-native';
 
 type Props = {
@@ -67,7 +67,6 @@ const HomePage = (props: Props) => {
     <View style={styles.container}>
     {hasError ? (
         <View style={styles.errorContainer}>
-          <Image source={require('../resource/no-wifi.png')} style={styles.image} />
           <Text style={styles.title}>{errorTitle}</Text>
           <Text style={styles.message}>
             {errorDescription}

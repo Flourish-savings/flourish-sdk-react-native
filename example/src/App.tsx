@@ -56,7 +56,11 @@ export default function App() {
       style: 'marginTop: 20',
     };
 
-    initialize(partnerId, partnerSecret, language, environment, customerCode, '', webViewOptions);
+    const printInitializationCallback = (data: string): void => {
+      console.log('Auth callback', data);
+    };
+
+    initialize(partnerId, partnerSecret, language, environment, customerCode, '', webViewOptions, printInitializationCallback);
   }, []);
 
   const renderScene = BottomNavigation.SceneMap({
