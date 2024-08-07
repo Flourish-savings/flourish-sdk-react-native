@@ -164,7 +164,7 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
       const data = JSON.stringify({"eventName":"AUTHENTICATION_FAILURE"});
       props.genericEventCallback(data);
     }
-    return <GenericErrorScreen onBackButtonEvent={props.genericEventCallback} />
+    return <GenericErrorScreen language={language} onBackButtonEvent={props.genericEventCallback} />
   }
 
   if(error){
