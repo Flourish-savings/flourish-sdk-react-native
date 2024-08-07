@@ -82,6 +82,7 @@ const HomePage = (props: Props) => {
           source={{
             uri: `${url}`,
           }}
+          cacheEnabled={false}
           androidLayerType={props.webViewProps?.androidLayerType || 'none'}
           scalesPageToFit={props.webViewProps?.scalesPageToFit || false}
           domStorageEnabled={props.webViewProps?.domStorageEnabled || false}

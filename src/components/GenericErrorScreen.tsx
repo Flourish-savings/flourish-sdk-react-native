@@ -1,11 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 interface GenericErrorScreenProps {
+  language: string;
   onBackButtonEvent?: (data: string) => void;
 }
 
-const GenericErrorScreen: React.FC<GenericErrorScreenProps> = ({ onBackButtonEvent = () => {} }) => {
+const GenericErrorScreen: React.FC<GenericErrorScreenProps> = ({ language, onBackButtonEvent = () => {} }) => {
+  const [errorMessage, setErrorMessage] = useState('');
+  const [errorSupportText, setErrorSupportText] = useState('');
+
+  useEffect(() => {
+    switch (language) {
+      case 'en':
+        setErrorMessage('Oops, something went wrong!');
+        setErrorSupportText('Please, contact us through support.');
+        break;
+      case 'es':
+        setErrorMessage('Huy! Algo salió mal.');
+        setErrorSupportText('Por favor, contacta con soporte.');
+        break;  
+      case 'pt':
+        setErrorMessage('Opa, algo deu errado.');
+        setErrorSupportText('Por favor, contate o nosso suporte.');
+        break;  
+    
+      default:
+        break;
+    }
+  }, [language]);
+
   const handleBackPress = () => {
     if (onBackButtonEvent) {
       const data = JSON.stringify({"eventName":"ERROR_BACK_BUTTON_PRESSED"});
@@ -21,8 +45,8 @@ const GenericErrorScreen: React.FC<GenericErrorScreenProps> = ({ onBackButtonEve
         <Text style={styles.backText}>←</Text>
       </TouchableOpacity>
       <Text style={styles.title}>Error</Text>
-      <Text style={styles.message}>Oops, something went wrong!</Text>
-      <Text style={styles.supportText}>Please, contact us through support.</Text>
+      <Text style={styles.message}>{errorMessage}</Text>
+      <Text style={styles.supportText}>{errorSupportText}</Text>
     </View>
   );
 };
