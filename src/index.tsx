@@ -159,9 +159,6 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
   if (props?.giftCardCopyEventCallback)
     onGiftCardCopyReceived(props.giftCardCopyEventCallback);
 
-  console.log('token', token);
-  console.log('error token', error);
-
   if(!token && !error){
     if(props.genericEventCallback){
       const data = JSON.stringify({"eventName":"AUTHENTICATION_FAILURE"});
