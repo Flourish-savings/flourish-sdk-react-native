@@ -23,7 +23,7 @@
     "react-native-web": "~0.18.9",
     "typescript": "^4.6.3",
     "react-native-webview": "^11.26.1",
-    "flourish-sdk-react-native": "2.7.0"
+    "flourish-sdk-react-native": "2.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
-const ErrorScreen = () => {
+const RefreshTokenScreen = () => {
   return (
     <View style={styles.centered}>
       <Text style={styles.baseText}>
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ErrorScreen;
+export default RefreshTokenScreen;
