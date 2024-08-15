@@ -8013,10 +8013,10 @@ react-native-event-listeners@^1.0.7:
   dependencies:
     type-detect "^4.0.8"
 
-react-native-webview@^11.26.1:
-  version "11.26.1"
-  resolved "https://registry.npmjs.org/react-native-webview/-/react-native-webview-11.26.1.tgz"
-  integrity sha512-hC7BkxOpf+z0UKhxFSFTPAM4shQzYmZHoELa6/8a/MspcjEP7ukYKpuSUTLDywQditT8yI9idfcKvfZDKQExGw==
+react-native-webview@^13.10.5:
+  version "13.10.5"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-13.10.5.tgz#d6d2238b12dd295765eb5d4fdbb34759ffd1df27"
+  integrity sha512-ZfQJHyifuZop8cQB8HYpL9dxss9Cw9sOlMU+/yarfG/ugoL0rky/0tq9QmEydFMXjDSplSUb22OrRdFlqfXe0g==
   dependencies:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
