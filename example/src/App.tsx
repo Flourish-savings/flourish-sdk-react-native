@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { LogBox } from 'react-native';
 import HomeScreen from './HomeScreen';
 import RewardsScreen from './RewardsScreen';
@@ -33,7 +33,15 @@ export default function App() {
       console.log('Auth callback', data);
     };
 
-    initialize(partnerId, partnerSecret, language, environment, customerCode, '', webViewOptions, printInitializationCallback);
+    initialize(
+      partnerId,
+      partnerSecret,
+      language,
+      environment,
+      customerCode,
+      webViewOptions,
+      printInitializationCallback
+    );
   }, []);
 
   return (

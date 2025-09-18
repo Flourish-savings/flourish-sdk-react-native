@@ -16,7 +16,6 @@ import {
   onGiftCardCopyReceived,
 } from './events/eventManager';
 
-
 type ConfigProps = {
   genericEventCallback?: (data: string) => void;
   backButtonEventCallback?: (data: string) => void;
@@ -30,23 +29,25 @@ type ConfigProps = {
 };
 
 type State = {
-  partner: string;
+  uuid: string;
   secret: string;
   language: string;
   environment: string;
   token: string;
+  url: string;
   customerCode?: string;
   webViewProps?: WebViewOptions;
   isError: boolean;
 };
 
 export const sdkStore = createStore<State>(() => ({
-  partner: '',
+  uuid: '',
   secret: '',
   language: '',
   environment: '',
   token: '',
-  webViewProps: null || undefined,
+  url: '',
+  webViewProps: undefined,
   isError: false,
 }));
 
@@ -62,76 +63,74 @@ export type WebViewOptions = {
 };
 
 export const initialize = async (
-  partner: string,
+  uuid: string,
   secret: string,
   language: string,
   environment: string,
   clientCustomerCode: string,
-  category?: string,
   webViewProps?: WebViewOptions,
   authCallback?: (data: any) => void
 ) => {
   sdkStore.setState({
-    partner: partner,
+    uuid: uuid,
     secret: secret,
     language: language,
     environment: environment,
-    webViewProps: webViewProps
+    webViewProps: webViewProps,
   });
 
-  await authenticate(clientCustomerCode, category, authCallback);
+  await authenticate(clientCustomerCode, authCallback);
 };
 
 export const authenticate = async (
   clientCustomerCode: string,
-  category?: string,
   authCallback?: (data: any) => void
 ) => {
-  const { partner, secret, environment, language } = sdkStore.getState();
+  const { uuid, secret, environment, language } = sdkStore.getState();
 
   const response = await api.authenticate(
-    partner,
+    uuid,
     secret,
     environment,
     clientCustomerCode,
-    category
+    language
   );
-  if (response.access_token) {
+  if (response.session_token && response.url) {
     sdkStore.setState({
-      partner: partner,
+      uuid: uuid,
       secret: secret,
       language: language,
       environment: environment,
-      token: response.access_token,
+      token: response.session_token,
+      url: response.url,
       customerCode: clientCustomerCode,
       isError: false,
     });
-    const signResponse = await signIn(response.access_token);
     if (authCallback) {
+      console.log('Auth callback', {
+        success: 'The authentication process worked successfully',
+        store: sdkStore.getState(),
+        response: response,
+      });
       authCallback({
         success: 'The authentication process worked successfully',
       });
     }
-    return signResponse;
+    return response;
   } else {
     if (authCallback) {
-      authCallback({eventName:'AUTHENTICATION_FAILURE'});
+      authCallback({ eventName: 'AUTHENTICATION_FAILURE' });
     }
     return false;
   }
-};
-
-const signIn = async (access_token: string): Promise<boolean> => {
-  const { environment } = sdkStore.getState();
-  const response = await api.signIn(access_token, environment);
-  return response.isValid;
 };
 
 const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
   const [componentToken, setComponentToken] = useState();
   const [error, setError] = useState(false);
 
-  const { language, environment, token, webViewProps } = sdkStore.getState();
+  const { language, environment, token, url, webViewProps } =
+    sdkStore.getState();
 
   const callback = (state: any) => {
     setComponentToken(state.token);
@@ -159,27 +158,37 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
   if (props?.giftCardCopyEventCallback)
     onGiftCardCopyReceived(props.giftCardCopyEventCallback);
 
-  if(!token && !error){
-    if(props.genericEventCallback){
-      const data = JSON.stringify({"eventName":"AUTHENTICATION_FAILURE"});
+  if (!token && !error) {
+    if (props.genericEventCallback) {
+      const data = JSON.stringify({ eventName: 'AUTHENTICATION_FAILURE' });
       props.genericEventCallback(data);
     }
-    return <GenericErrorScreen language={language} onBackButtonEvent={props.genericEventCallback} />
+    return (
+      <GenericErrorScreen
+        language={language}
+        onBackButtonEvent={props.genericEventCallback}
+      />
+    );
   }
 
-  if(error){
-    return <RefreshTokenScreen />
+  if (error) {
+    return <RefreshTokenScreen />;
   }
 
   return (
     <>
       {componentToken !== '' && !error && (
-        <HomePage token={token} environment={environment} language={language} webViewProps={webViewProps}/>
+        <HomePage
+          token={token}
+          url={url}
+          environment={environment}
+          language={language}
+          webViewProps={webViewProps}
+        />
       )}
       {error && <RefreshTokenScreen />}
     </>
   );
-
 };
 
 export default Flourish;
