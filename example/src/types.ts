@@ -1,5 +1,4 @@
 export type RootStackParamList = {
-    Home: undefined;
-    Reward: { itemId: number };
-  };
-  
+  Home: undefined;
+  Reward: { itemId: number };
+};

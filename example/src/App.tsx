@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { LogBox } from 'react-native';
 import HomeScreen from './HomeScreen';
 import RewardsScreen from './RewardsScreen';
@@ -13,8 +13,8 @@ export default function App() {
   LogBox.ignoreAllLogs();
 
   useEffect(() => {
-    const partnerId = process.env.PARTNER_ID;
-    const partnerSecret = process.env.PARTNER_SECRET;
+    const uuid = process.env.PARTNER_ID;
+    const secret = process.env.PARTNER_SECRET;
     const language = process.env.LANGUAGE;
     const environment = process.env.ENVIRONMENT;
     const customerCode = process.env.CUSTOMER_CODE;
@@ -33,7 +33,15 @@ export default function App() {
       console.log('Auth callback', data);
     };
 
-    initialize(partnerId, partnerSecret, language, environment, customerCode, '', webViewOptions, printInitializationCallback);
+    initialize(
+      uuid,
+      secret,
+      language,
+      environment,
+      customerCode,
+      webViewOptions,
+      printInitializationCallback
+    );
   }, []);
 
   return (

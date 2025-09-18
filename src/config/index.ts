@@ -17,7 +17,7 @@ FLOURISH_SDK_APP_VERSION.set('production', ProdConfig.FLOURISH_SDK_APP_VERSION);
 const Config = {
   BACKEND_API_URL,
   FRONTEND_API_URL,
-  FLOURISH_SDK_APP_VERSION
+  FLOURISH_SDK_APP_VERSION,
 };
 
 export default Config;

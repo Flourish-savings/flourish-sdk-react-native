@@ -6,7 +6,10 @@ interface GenericErrorScreenProps {
   onBackButtonEvent?: (data: string) => void;
 }
 
-const GenericErrorScreen: React.FC<GenericErrorScreenProps> = ({ language, onBackButtonEvent = () => {} }) => {
+const GenericErrorScreen: React.FC<GenericErrorScreenProps> = ({
+  language,
+  onBackButtonEvent = () => {},
+}) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [errorSupportText, setErrorSupportText] = useState('');
 
@@ -19,12 +22,12 @@ const GenericErrorScreen: React.FC<GenericErrorScreenProps> = ({ language, onBac
       case 'es':
         setErrorMessage('Huy! Algo salió mal.');
         setErrorSupportText('Por favor, contacta con soporte.');
-        break;  
+        break;
       case 'pt':
         setErrorMessage('Opa, algo deu errado.');
         setErrorSupportText('Por favor, contate o nosso suporte.');
-        break;  
-    
+        break;
+
       default:
         break;
     }
@@ -32,16 +35,14 @@ const GenericErrorScreen: React.FC<GenericErrorScreenProps> = ({ language, onBac
 
   const handleBackPress = () => {
     if (onBackButtonEvent) {
-      const data = JSON.stringify({"eventName":"ERROR_BACK_BUTTON_PRESSED"});
+      const data = JSON.stringify({ eventName: 'ERROR_BACK_BUTTON_PRESSED' });
       onBackButtonEvent(data);
     }
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={
-          handleBackPress
-        }>
+      <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
         <Text style={styles.backText}>←</Text>
       </TouchableOpacity>
       <Text style={styles.title}>Error</Text>

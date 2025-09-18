@@ -1,12 +1,9 @@
 import React from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 const RefreshTokenScreen = () => {
   return (
     <View style={styles.centered}>
-      <Text style={styles.baseText}>
-        <Text>Too long out{'\n'}Renewing your experience</Text>
-      </Text>
       <ActivityIndicator size="large" color="#0000ff" />
     </View>
   );
