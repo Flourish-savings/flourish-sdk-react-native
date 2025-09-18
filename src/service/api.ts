@@ -2,8 +2,8 @@ import Config from '../config';
 
 export class Api {
   async authenticate(
-    partnerId: string,
-    partnerSecret: string,
+    uuid: string,
+    secret: string,
     environment: string,
     customerCode: string,
     language: string
@@ -14,8 +14,8 @@ export class Api {
       ) as string;
 
       let body = {
-        uuid: partnerId,
-        secret: partnerSecret,
+        uuid: uuid,
+        secret: secret,
         customer_code: customerCode,
         metadata: {
           sdk_version: sdkVersion,

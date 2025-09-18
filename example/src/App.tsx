@@ -13,8 +13,8 @@ export default function App() {
   LogBox.ignoreAllLogs();
 
   useEffect(() => {
-    const partnerId = process.env.PARTNER_ID;
-    const partnerSecret = process.env.PARTNER_SECRET;
+    const uuid = process.env.PARTNER_ID;
+    const secret = process.env.PARTNER_SECRET;
     const language = process.env.LANGUAGE;
     const environment = process.env.ENVIRONMENT;
     const customerCode = process.env.CUSTOMER_CODE;
@@ -34,8 +34,8 @@ export default function App() {
     };
 
     initialize(
-      partnerId,
-      partnerSecret,
+      uuid,
+      secret,
       language,
       environment,
       customerCode,

@@ -3,7 +3,7 @@
 <br>
 # Flourish React Native SDK
 
-This React Native library will allow the communication between the visual implementation of Flourish functionality.
+This React Native SDK will enable communication between the visual implementation of Flourish functionality.
 <br>
 <br>
 
@@ -24,14 +24,14 @@ ___
 
 ### Adding Flourish to your project
 
-In your project's `package.json` file, add the last version of Flourish Flutter SDK to your dependencies.
-```json
+In your project's `package.json` file, add the latest version of the Flourish React Native SDK to your dependencies.
 
+```json
 "dependencies": {
   "flourish-sdk-react-native": "*.*.*"
 }
 ```
-or install directly from terminal using npm or yarn
+or install directly from the terminal using npm or yarn:
 
 ```sh
 npm install flourish-sdk-react-native
@@ -41,125 +41,91 @@ npm install flourish-sdk-react-native
 yarn add flourish-sdk-react-native
 ```
 
-
 ### SDK internal requirements
 
 To use this SDK, you will need these elements:
 
-- partnerId: a unique identifier that will be provided by Flourish
+- uuid: a unique identifier that will be provided by Flourish
 - secret: a string that represents a key, also provided by Flourish
-- language: a string that will represents witch language will be used (en, es, pt)
+- customerCode: a string that represents your identifier
+- language: a string that represents which language will be used (en, es, pt)
 
 This plugin can be run in two different environments:
 
 - staging: In this environment, you can test the functionality without impacting any real data
-- production: this environment is for running the app with the real data
+- production: this environment is for running the app with real data
+<br>
+<br>
 
 ### About the SDK
 
-The integration with us works as follows, the client authenticates himself in our backend
-and we return an access token that allows him to load our webview, given that,
-the sdk serves to encapsulate and help in loading this webview.
+The integration with us works as follows: the client authenticates themselves in our backend,
+and we return an access token that allows them to load our webview. Therefore,
+the SDK serves to encapsulate and help in loading this webview.
 
 ### Using the SDK
 ___
 
-First foremost, it is necessary to initialize the SDK providing the variables: `partnerId`, `secret`, `env`, `language` and `customer_code`.
+### 1 - Initialization
 
-You can also pass a `category` this one isn't required.
+##<span style="color:red;">IMPORTANT❗</span>
 
-```js
-  import { initialize } from 'flourish-sdk-react-native';
+<div style="border: 1px solid grey; padding: 10px;">
 
-  const partnerId = process.env.PARTNER_ID;
-  const partnerSecret = process.env.PARTNER_SECRET;
-  const language = process.env.LANGUAGE;
-  const environment = process.env.ENVIRONMENT;
-  const customerCode = 'YOUR-CUSTOMER-CODE';
-  const category = 'CATEGORY-VALUE';
+**For the flow to work correctly and for us to have the correct metrics to show our value, it is extremely important to initialize our SDK when opening your App, for example at startup or on the home screen. The most important thing is that it is not initialized at the same time as opening our module.**
 
-  initialize(partnerId, partnerSecret, language, environment, customerCode, category);
+</div>
+
+___
+
+First and foremost, it is necessary to initialize the SDK by providing the variables: `uuid`, `secret`, `env`, `language`, `customerCode`, and optionally `trackingId`.
+
+```javascript
+import { initialize } from 'flourish-sdk-react-native';
+
+const initialize = async () => {
+  await initialize({
+    uuid: 'HERE_YOU_WILL_USE_YOUR_PARTNER_ID',
+    secret: 'HERE_YOU_WILL_USE_YOUR_SECRET',
+    environment: 'staging', // or 'production'
+    language: 'en', // 'en', 'es', or 'pt'
+    customerCode: 'HERE_YOU_WILL_USE_YOUR_CUSTOMER_CODE',
+    trackingId: 'HERE_YOU_WILL_USE_YOUR_GOOGLE_ANALYTICS_KEY_THIS_IS_NOT_REQUIRED'
+  });
+};
 ```
 
-### WebView options
+The `trackingId` variable is used if you want to pass your Google Analytics key to be able to monitor the use of our platform by your users.
 
-You can customize the webview component if you prefer, just initialize one of our configuration objects (WebViewOptions) and pass it in the initialization as the last parameter::
+### 2 - Open Flourish module
 
-```js
-  import type { WebViewOptions } from 'src/components/
-  CustomWebView';
+Finally, you can use the Flourish component in your screen:
 
-  const webViewOptions: WebViewOptions = {
-    androidLayerType: 'software',
-    scalesPageToFit: true,
-    domStorageEnabled: true,
-    scrollEnabled: true,
-    setBuiltInZoomControls: true,
-    bounces: true,
-    style: 'marginTop: 20',
-  };
+```javascript
+import { Flourish } from 'flourish-sdk-react-native';
 
-  initialize(partnerId, partnerSecret, language, environment, customerCode, category, webViewOptions);
+const YourScreen = () => {
+  return <Flourish />;
+};
 ```
-
-
-Finally after initialization, you will be able to import and adding our Flourish component inside your screen, but remember
-that all our functionalities are displayed through a webview.
-
-```js
-  import Flourish from 'flourish-sdk-react-native';
-
-  return (
-    <Flourish/>
-  );
-```
-
----
 
 ## EVENTS
 ___
-You can register for some events to know when something happens within our platform.
 
-### Listen all our events
-To listen all our events, you will pass a generic callback function to our Flourish component when you add it to your screen.
+### Listen to generic events
 
-```js
-import Flourish from 'flourish-sdk-react-native';
+```javascript
+const YourScreen = () => {
+  const onGenericEvent = (data) => {
+    console.log('Event received:', data);
+  };
 
-const genericEventCallback = (data: string): void => {
-  console.log('Event Client side', data);
-};
-
-const RewardsScreen = () => {
-  return <Flourish genericEventCallback={genericEventCallback} />;
+  return <Flourish genericEventCallback={onGenericEvent} />;
 };
 ```
-
-### Listen only to a specific event
-To listen to only a specific event you will pass a function to an attribute referring to the event you want to listen to.
-
-For example, if you want to be notified when a Trivia game ends, you can pass a callback function in the attribute called: "triviaGameFinishedEventCallback"
-
-```js
-import Flourish from 'flourish-sdk-react-native';
-
-const triviaGameFinishedEventCallback = (data: string): void => {
-  console.log('Event Client side', data);
-};
-
-const RewardsScreen = () => {
-  return (
-    <Flourish
-      triviaGameFinishedEventCallback={triviaGameFinishedEventCallback}
-    />
-  );
-};
-```
-
-
 
 ### Events to listen
-here you have all events we will return
+Here you have all events we will return:
 
 | Event name                     | Description                                                                                                       |
 |--------------------------------|-------------------------------------------------------------------------------------------------------------------|
@@ -170,19 +136,17 @@ here you have all events we will return
 | TERMS_ACCEPTED                 | When you need to know when the user clicks to accept the terms.                                                   |
 | TRIVIA_GAME_FINISHED           | When you need to know when the user finishes a Trivia game on our platform.                                       |
 | TRIVIA_CLOSED                  | When you need to know when the user closed the Trivia game on our platform.                                       |
-| REFERRAL_COPY                  | When you need to know when the user copy the referral code to the clipboard area.                                 |
-| REFERRAL_FINISHED              | When you need to know when the referral finished.                                                                 |
-| REFERRAL_REWARD_REDEEMED       | When you need to know when the user redeem the referral rewards.                                                  |
-| REFERRAL_REWARD_SKIPPED        | When you need to know when the user slipped the referral rewards.                                                 |
-| GIFT_CARD_COPY                 | When you need to know when the user copy the Gift code to the clipboard area.                                     |
-| HOME_BANNER_ACTION             | When you need to know when the user clicks on the home banner.                                                    |
-| MISSION_ACTION                 | When you need to know when the user clicks on a mission card                                                      |
-| AUTHENTICATION_FAILURE         | When you need to know when the Authentication failed                                                              |
-| ERROR                          | When you need to know when a not mapped error happened.                                                           |
-
+| REFERRAL_COPY                  | When you need to know when the user copies the referral code to the clipboard area.                               |
+| REFERRAL_FINISHED             | When you need to know when the referral has finished.                                                             |
+| REFERRAL_REWARD_REDEEMED      | When you need to know when the user redeems the referral rewards.                                                |
+| REFERRAL_REWARD_SKIPPED       | When you need to know when the user skipped the referral rewards.                                                |
+| GIFT_CARD_COPY                | When you need to know when the user copies the Gift Card code to the clipboard area.                              |
+| HOME_BANNER_ACTION            | When you need to know when the user clicks on the home banner.                                                    |
+| MISSION_ACTION                | When you need to know when the user clicks on a mission card.                                                     |
+| AUTHENTICATION_FAILURE        | When you need to know when the Authentication failed.                                                             |
+| ERROR                         | When you need to know when a not mapped error happened.                                                           |
 
 ## Examples
-___
 Inside this repository, you have an example app to show how to integrate with us:
 
 https://github.com/Flourish-savings/flourish-sdk-react-native/tree/main/example
