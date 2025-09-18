@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { emitEvent } from '../events/eventManager';
 import { WebView } from 'react-native-webview';
-import Config from '../config';
 import type { WebViewErrorEvent } from 'react-native-webview/lib/WebViewTypes';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import type { WebViewOptions } from 'flourish-sdk-react-native';
 
 type Props = {
   token: string;
+  url: string;
   environment: string;
   language: string;
   webViewProps: WebViewOptions | undefined;
@@ -20,38 +20,41 @@ const HomePage = (props: Props) => {
   const [errorTitle, setErrorTitle] = useState('');
   const [errorDescription, setErrorDescription] = useState('');
   const [errorButtonText, setErrorButtonText] = useState('');
-  
+
   useEffect(() => {
-    const baseURL = Config.FRONTEND_API_URL.get(props.environment);
-    const tokenPath = `?token=${props.token}`;
-    const languagePath = `&lang=${props.language}`;
-    const versionPath = `&sdk_version=${
-      Config.FLOURISH_SDK_APP_VERSION.get(props.environment) as string
-    }`;
-    const completeURL = `${baseURL}${tokenPath}${languagePath}${versionPath}`;
-    if (baseURL !== undefined && props.token !== undefined) setUrl(completeURL);
+    if (props.url && props.token !== undefined) {
+      const completeURL = `${props.url}?token=${props.token}`;
+      console.log('Complete URL:', completeURL);
+      setUrl(completeURL);
+    }
 
     switch (props.language) {
       case 'en':
         setErrorTitle('No internet \n connection');
-        setErrorDescription('Please, make sure your internet \n connection is working and try again!');
+        setErrorDescription(
+          'Please, make sure your internet \n connection is working and try again!'
+        );
         setErrorButtonText('Try again');
         break;
       case 'es':
         setErrorTitle('No hay conexión \n a internet');
-        setErrorDescription('Por favor, asegúrese de que su conexión a \n internet esté funcionando correctamente \n e intente nuevamente.');
+        setErrorDescription(
+          'Por favor, asegúrese de que su conexión a \n internet esté funcionando correctamente \n e intente nuevamente.'
+        );
         setErrorButtonText('Intentar  nuevamente');
-        break;  
+        break;
       case 'pt':
         setErrorTitle('Não há conexão \n de internet');
-        setErrorDescription('Por favor, assegura-se de que sua \n conexão com a internet está funcionando \n corretamente e tente novamente');
+        setErrorDescription(
+          'Por favor, assegura-se de que sua \n conexão com a internet está funcionando \n corretamente e tente novamente'
+        );
         setErrorButtonText('Tentar novamente');
-        break;  
-    
+        break;
+
       default:
         break;
     }
-  }, [props.environment, props.language, props.token]);
+  }, [props.environment, props.language, props.token, props.url]);
 
   const handleError = (event: WebViewErrorEvent) => {
     const { nativeEvent } = event;
@@ -65,45 +68,44 @@ const HomePage = (props: Props) => {
 
   return (
     <View style={styles.container}>
-    {hasError ? (
+      {hasError ? (
         <View style={styles.errorContainer}>
           <Text style={styles.title}>{errorTitle}</Text>
-          <Text style={styles.message}>
-            {errorDescription}
-          </Text>
+          <Text style={styles.message}>{errorDescription}</Text>
           <TouchableOpacity style={styles.button} onPress={handleRetry}>
             <Text style={styles.buttonText}>{errorButtonText}</Text>
           </TouchableOpacity>
         </View>
-    ) : (
-      <>
-      {url !== '' && (
-        <WebView
-          source={{
-            uri: `${url}`,
-          }}
-          cacheEnabled={false}
-          androidLayerType={props.webViewProps?.androidLayerType || 'none'}
-          scalesPageToFit={props.webViewProps?.scalesPageToFit || false}
-          domStorageEnabled={props.webViewProps?.domStorageEnabled || false}
-          scrollEnabled={props.webViewProps?.scrollEnabled || false}
-          setBuiltInZoomControls={props.webViewProps?.setBuiltInZoomControls || false}
-          bounces={props.webViewProps?.bounces || false}
-          injectedJavaScript={props.webViewProps?.injectedJavaScript || ''}
-          style={props.webViewProps?.style || ''}
-          onError={handleError}
-          onMessage={(event) => {
-            const data = JSON.parse(event.nativeEvent.data);
-            emitEvent(data);
-          }}
-        />
+      ) : (
+        <>
+          {url !== '' && (
+            <WebView
+              source={{
+                uri: `${url}`,
+              }}
+              cacheEnabled={false}
+              androidLayerType={props.webViewProps?.androidLayerType || 'none'}
+              scalesPageToFit={props.webViewProps?.scalesPageToFit || false}
+              domStorageEnabled={props.webViewProps?.domStorageEnabled || false}
+              scrollEnabled={props.webViewProps?.scrollEnabled || false}
+              setBuiltInZoomControls={
+                props.webViewProps?.setBuiltInZoomControls || false
+              }
+              bounces={props.webViewProps?.bounces || false}
+              injectedJavaScript={props.webViewProps?.injectedJavaScript || ''}
+              style={props.webViewProps?.style || ''}
+              onError={handleError}
+              onMessage={(event) => {
+                const data = JSON.parse(event.nativeEvent.data);
+                emitEvent(data);
+              }}
+            />
+          )}
+        </>
       )}
-    </>
-    )}
-  </View>
+    </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
