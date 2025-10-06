@@ -89,7 +89,7 @@
     "react-native": "*"
   },
   "engines": {
-    "node": ">= 18.12.0"
+    "node": ">= 20.19.4"
   },
   "jest": {
     "preset": "react-native",
