@@ -4,6 +4,7 @@ import RefreshTokenScreen from './components/RefreshTokenScreen';
 import { createStore } from 'zustand/vanilla';
 import { api } from './service/api';
 import GenericErrorScreen from './components/GenericErrorScreen';
+import type { PageName } from './utils/pageMapper';
 import {
   onGenericEventReceived,
   onBackButtonReceived,
@@ -16,7 +17,10 @@ import {
   onGiftCardCopyReceived,
 } from './events/eventManager';
 
+export type { PageName } from './utils/pageMapper';
+
 type ConfigProps = {
+  pageName?: PageName;
   genericEventCallback?: (data: string) => void;
   backButtonEventCallback?: (data: string) => void;
   homeBackButtonEventCallback?: (data: string) => void;
@@ -37,6 +41,7 @@ type State = {
   url: string;
   customerCode?: string;
   webViewProps?: WebViewOptions;
+  pageName?: PageName;
   isError: boolean;
 };
 
@@ -48,6 +53,7 @@ export const sdkStore = createStore<State>(() => ({
   token: '',
   url: '',
   webViewProps: undefined,
+  pageName: undefined,
   isError: false,
 }));
 
@@ -69,7 +75,8 @@ export const initialize = async (
   environment: string,
   clientCustomerCode: string,
   webViewProps?: WebViewOptions,
-  authCallback?: (data: any) => void
+  authCallback?: (data: any) => void,
+  pageName?: PageName
 ) => {
   sdkStore.setState({
     uuid: uuid,
@@ -77,6 +84,7 @@ export const initialize = async (
     language: language,
     environment: environment,
     webViewProps: webViewProps,
+    pageName: pageName,
   });
 
   await authenticate(clientCustomerCode, authCallback);
@@ -129,7 +137,7 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
   const [componentToken, setComponentToken] = useState();
   const [error, setError] = useState(false);
 
-  const { language, environment, token, url, webViewProps } =
+  const { language, environment, token, url, webViewProps, pageName } =
     sdkStore.getState();
 
   const callback = (state: any) => {
@@ -184,6 +192,7 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
           environment={environment}
           language={language}
           webViewProps={webViewProps}
+          pageName={pageName}
         />
       )}
       {error && <RefreshTokenScreen />}

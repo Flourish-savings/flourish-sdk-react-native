@@ -40,7 +40,8 @@ export default function App() {
       environment,
       customerCode,
       webViewOptions,
-      printInitializationCallback
+      printInitializationCallback,
+      'home'
     );
   }, []);
 
