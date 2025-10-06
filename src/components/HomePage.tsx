@@ -34,7 +34,7 @@ const HomePage = (props: Props) => {
       if (props.pageName) {
         const mappedPageName = mapPageName(props.pageName);
         if (mappedPageName) {
-          completeURL += `&page=${mappedPageName}`;
+          completeURL += `&redirectTo=${mappedPageName}`;
         }
       }
 
