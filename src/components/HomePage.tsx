@@ -5,6 +5,8 @@ import type { WebViewErrorEvent } from 'react-native-webview/lib/WebViewTypes';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import type { WebViewOptions } from 'flourish-sdk-react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
+import type { PageName } from '../utils/pageMapper';
+import { mapPageName } from '../utils/pageMapper';
 
 type Props = {
   token: string;
@@ -12,7 +14,8 @@ type Props = {
   environment: string;
   language: string;
   webViewProps: WebViewOptions | undefined;
-  onTokenError?: () => void; // Adicione esta prop para navegação
+  pageName?: PageName;
+  onTokenError?: () => void;
 };
 
 const HomePage = (props: Props) => {
@@ -26,7 +29,15 @@ const HomePage = (props: Props) => {
 
   useEffect(() => {
     if (props.url && props.token !== undefined) {
-      const completeURL = `${props.url}?token=${props.token}`;
+      let completeURL = `${props.url}?token=${props.token}`;
+
+      if (props.pageName) {
+        const mappedPageName = mapPageName(props.pageName);
+        if (mappedPageName) {
+          completeURL += `&redirectTo=${mappedPageName}`;
+        }
+      }
+
       console.log('Complete URL:', completeURL);
       setUrl(completeURL);
     }
@@ -57,7 +68,13 @@ const HomePage = (props: Props) => {
       default:
         break;
     }
-  }, [props.environment, props.language, props.token, props.url]);
+  }, [
+    props.environment,
+    props.language,
+    props.token,
+    props.url,
+    props.pageName,
+  ]);
 
   const handleError = (event: WebViewErrorEvent) => {
     const { nativeEvent } = event;

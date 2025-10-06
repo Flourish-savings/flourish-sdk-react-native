@@ -14,6 +14,7 @@ Table of contents
    * [Getting Started](#getting-started)
      * [About the SDK](#about-the-sdk)
      * [Using the SDK](#using-the-sdk)
+     * [Direct Page Navigation](#direct-page-navigation)
    * [Events](#events)
    * [Examples](#examples)
 <!--te-->
@@ -90,7 +91,8 @@ const initialize = async () => {
     environment: 'staging', // or 'production'
     language: 'en', // 'en', 'es', or 'pt'
     customerCode: 'HERE_YOU_WILL_USE_YOUR_CUSTOMER_CODE',
-    trackingId: 'HERE_YOU_WILL_USE_YOUR_GOOGLE_ANALYTICS_KEY_THIS_IS_NOT_REQUIRED'
+    trackingId: 'HERE_YOU_WILL_USE_YOUR_GOOGLE_ANALYTICS_KEY_THIS_IS_NOT_REQUIRED',
+    pageName: 'missions' // Optional: Open directly to a specific page
   });
 };
 ```
@@ -109,6 +111,67 @@ const YourScreen = () => {
 };
 ```
 
+### 3 - Direct Page Navigation
+___
+
+You can navigate directly to specific pages within the Flourish platform by using the `pageName` parameter. This feature allows you to open the SDK already positioned on a particular screen, improving user experience and reducing navigation steps.
+
+#### Using pageName in the initialize function:
+
+```javascript
+import { initialize } from 'flourish-sdk-react-native';
+
+const initializeWithPage = async () => {
+  await initialize({
+    uuid: 'YOUR_PARTNER_ID',
+    secret: 'YOUR_SECRET',
+    environment: 'staging',
+    language: 'en',
+    customerCode: 'YOUR_CUSTOMER_CODE',
+    pageName: 'dailyRewards' // Opens directly to daily rewards page
+  });
+};
+```
+
+#### Using pageName in the Flourish component:
+
+```javascript
+import { Flourish } from 'flourish-sdk-react-native';
+
+const YourScreen = () => {
+  return <Flourish pageName="missions" />; // Opens directly to missions page
+};
+```
+
+#### Available pages:
+
+| Page Name | Description |
+|-----------|-------------|
+| `onboarding` | User onboarding flow |
+| `pendingRewards` | Pending rewards page |
+| `dailyRewards` | Daily rewards page |
+| `welcomeMission` | Welcome mission page |
+| `home` | Home page |
+| `help` | Help and support page |
+| `missions` | Missions overview |
+| `missionDetail` | Mission detail page |
+| `progress` | User progress page |
+| `missionHistory` | Mission history |
+| `voucherHistory` | Voucher history |
+| `activityHistory` | Activity history |
+| `cashback` | Cashback page |
+| `cashbackCategory` | Cashback categories |
+| `wheel` | Wheel page |
+| `wheelGameplay` | Wheel gameplay |
+| `trivia` | Trivia games |
+| `triviaGameplay` | Trivia gameplay |
+| `triviaFinish` | Trivia completion |
+| `giftCardHistory` | Gift card history |
+| `giftCard` | Gift card page |
+
+
+**Note**: If no `pageName` is specified, the platform will open on the default home page.
+
 ## EVENTS
 ___
 
@@ -121,6 +184,30 @@ const YourScreen = () => {
   };
 
   return <Flourish genericEventCallback={onGenericEvent} />;
+};
+```
+
+### Example with pageName and events
+
+```javascript
+const YourScreen = () => {
+  const onGenericEvent = (data) => {
+    console.log('Event received:', data);
+    // Handle specific events like Trivia completion, back button, etc.
+  };
+
+  const onBackButton = (data) => {
+    console.log('Back button pressed:', data);
+    // Navigate back in your app
+  };
+
+  return (
+    <Flourish 
+      pageName="missions" // Open directly to missions page
+      genericEventCallback={onGenericEvent}
+      backButtonEventCallback={onBackButton}
+    />
+  );
 };
 ```
 

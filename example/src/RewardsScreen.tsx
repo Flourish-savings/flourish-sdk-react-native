@@ -6,7 +6,9 @@ import type { RootStackParamList } from './types';
 type Props = NativeStackScreenProps<RootStackParamList, 'Reward'>;
 
 const RewardsScreen: React.FC<Props> = ({ navigation, route }) => {
-  console.log(route);
+  const { pageName } = route.params || {};
+
+  console.log('Opening Flourish with pageName:', pageName);
 
   const printGenericEventData = (data: string): void => {
     console.log('Event Client side', data);
@@ -18,7 +20,18 @@ const RewardsScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  return <Flourish genericEventCallback={printGenericEventData} />;
+  const printBackButtonData = (data: string): void => {
+    console.log('Back button pressed:', data);
+    navigation.navigate('Home');
+  };
+
+  return (
+    <Flourish
+      pageName={pageName}
+      genericEventCallback={printGenericEventData}
+      backButtonEventCallback={printBackButtonData}
+    />
+  );
 };
 
 export default RewardsScreen;
