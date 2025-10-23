@@ -29,7 +29,7 @@ const HomePage = (props: Props) => {
 
   useEffect(() => {
     if (props.url && props.token !== undefined) {
-      let completeURL = `${props.url}?token=${props.token}`;
+      let completeURL = `https://${props.url}?token=${props.token}`;
 
       if (props.pageName) {
         const mappedPageName = mapPageName(props.pageName);
@@ -38,7 +38,6 @@ const HomePage = (props: Props) => {
         }
       }
 
-      console.log('Complete URL:', completeURL);
       setUrl(completeURL);
     }
 

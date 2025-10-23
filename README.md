@@ -88,10 +88,11 @@ const initialize = async () => {
   await initialize({
     uuid: 'HERE_YOU_WILL_USE_YOUR_PARTNER_ID',
     secret: 'HERE_YOU_WILL_USE_YOUR_SECRET',
-    environment: 'staging', // or 'production'
     language: 'en', // 'en', 'es', or 'pt'
+    environment: 'staging', // or 'production'
     customerCode: 'HERE_YOU_WILL_USE_YOUR_CUSTOMER_CODE',
-    trackingId: 'HERE_YOU_WILL_USE_YOUR_GOOGLE_ANALYTICS_KEY_THIS_IS_NOT_REQUIRED',
+    webViewOptions, // Optional: WebViewOptions
+    printInitializationCallback, // Optional: Event callback function
     pageName: 'missions' // Optional: Open directly to a specific page
   });
 };
@@ -104,7 +105,7 @@ The `trackingId` variable is used if you want to pass your Google Analytics key 
 Finally, you can use the Flourish component in your screen:
 
 ```javascript
-import { Flourish } from 'flourish-sdk-react-native';
+import Flourish from 'flourish-sdk-react-native';
 
 const YourScreen = () => {
   return <Flourish />;
@@ -136,7 +137,7 @@ const initializeWithPage = async () => {
 #### Using pageName in the Flourish component:
 
 ```javascript
-import { Flourish } from 'flourish-sdk-react-native';
+import Flourish from 'flourish-sdk-react-native';
 
 const YourScreen = () => {
   return <Flourish pageName="missions" />; // Opens directly to missions page
@@ -196,16 +197,10 @@ const YourScreen = () => {
     // Handle specific events like Trivia completion, back button, etc.
   };
 
-  const onBackButton = (data) => {
-    console.log('Back button pressed:', data);
-    // Navigate back in your app
-  };
-
   return (
     <Flourish 
       pageName="missions" // Open directly to missions page
       genericEventCallback={onGenericEvent}
-      backButtonEventCallback={onBackButton}
     />
   );
 };

@@ -115,11 +115,6 @@ export const authenticate = async (
       isError: false,
     });
     if (authCallback) {
-      console.log('Auth callback', {
-        success: 'The authentication process worked successfully',
-        store: sdkStore.getState(),
-        response: response,
-      });
       authCallback({
         success: 'The authentication process worked successfully',
       });
