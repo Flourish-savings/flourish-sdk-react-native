@@ -13,6 +13,8 @@ export class Api {
         environment
       ) as string;
 
+      const endpoint = Config.BACKEND_API_URL.get(environment);
+
       let body = {
         uuid: uuid,
         secret: secret,
@@ -24,16 +26,13 @@ export class Api {
         },
       };
 
-      const response = await fetch(
-        `${Config.BACKEND_API_URL.get(environment)}/authentication`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(body),
-        }
-      );
+      const response = await fetch(`${endpoint}/authentication`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
       const res = await response.json();
       return {
         session_token: res.session_token,
