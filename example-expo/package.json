@@ -1,0 +1,43 @@
+{
+  "name": "flourish-expo-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "dependencies": {
+    "expo": "~53.0.0",
+    "expo-build-properties": "~0.14.0",
+    "expo-status-bar": "~2.0.0",
+    "flourish-sdk-react-native": "3.2.0",
+    "react": "19.0.0",
+    "react-native": "0.79.6",
+    "react-native-safe-area-context": "^5.5.2",
+    "react-native-webview": "^13.13.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@types/jest": "^29.5.13",
+    "@types/react": "^19.0.0",
+    "@types/react-test-renderer": "^19.0.0",
+    "babel-preset-expo": "~12.0.1",
+    "eslint": "^8.19.0",
+    "eslint-config-expo": "~8.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^29.6.3",
+    "jest-expo": "~53.0.0",
+    "prettier": "2.8.8",
+    "react-test-renderer": "19.0.0",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

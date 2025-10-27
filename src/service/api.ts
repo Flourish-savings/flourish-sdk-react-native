@@ -1,4 +1,5 @@
 import Config from '../config';
+import axios, { AxiosError } from 'axios';
 
 export class Api {
   async authenticate(
@@ -15,7 +16,7 @@ export class Api {
 
       const endpoint = Config.BACKEND_API_URL.get(environment);
 
-      let body = {
+      const body = {
         uuid: uuid,
         secret: secret,
         customer_code: customerCode,
@@ -26,20 +27,23 @@ export class Api {
         },
       };
 
-      const response = await fetch(`${endpoint}/authentication`, {
-        method: 'POST',
+      const response = await axios.post(`${endpoint}/authentication`, body, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(body),
       });
-      const res = await response.json();
+
       return {
-        session_token: res.session_token,
-        url: res.url,
+        session_token: response.data.session_token,
+        url: response.data.url,
       };
     } catch (error) {
-      console.error('Error when try to retrieve token', error);
+      const axiosError = error as AxiosError;
+      console.error('Error when try to retrieve token', axiosError.message);
+      if (axiosError.response) {
+        console.error('Response data:', axiosError.response.data);
+        console.error('Response status:', axiosError.response.status);
+      }
       return { session_token: '', url: '' };
     }
   }
