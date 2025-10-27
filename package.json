@@ -15,6 +15,7 @@
     "cpp",
     "*.podspec",
     "!lib/typescript/example",
+    "!lib/typescript/example-expo",
     "!ios/build",
     "!android/build",
     "!android/gradle",
