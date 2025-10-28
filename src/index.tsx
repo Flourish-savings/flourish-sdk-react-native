@@ -142,6 +142,8 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
 
   sdkStore.subscribe(callback);
 
+  const pageNameToUse = props.pageName || pageName;
+
   if (props?.genericEventCallback)
     onGenericEventReceived(props.genericEventCallback);
   if (props?.backButtonEventCallback)
@@ -187,7 +189,7 @@ const Flourish: React.FC<ConfigProps> = (props: ConfigProps) => {
           environment={environment}
           language={language}
           webViewProps={webViewProps}
-          pageName={pageName}
+          pageName={pageNameToUse}
         />
       )}
       {error && <RefreshTokenScreen />}
