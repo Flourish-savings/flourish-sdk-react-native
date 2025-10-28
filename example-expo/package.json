@@ -15,7 +15,7 @@
     "expo": "~53.0.0",
     "expo-build-properties": "~0.14.0",
     "expo-status-bar": "~2.0.0",
-    "flourish-sdk-react-native": "3.2.0",
+    "flourish-sdk-react-native": "3.2.1",
     "react": "19.0.0",
     "react-native": "0.79.6",
     "react-native-safe-area-context": "^5.5.2",
